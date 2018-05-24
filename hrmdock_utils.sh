@@ -72,7 +72,9 @@ hrmdock_create_user() {
     # echo "$(id -u $1 &>/dev/null)"
     useradd -m -d /home/$1 $1
     usermod -u $2 $1
+    usermod -aG sudo $1
     cd /home/$1
+    echo "$1 ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$1
     echo "source /workspace/${HRMDOCK_FILE}" >> .bashrc
     echo "hrmdock_import_ssh_keys" >> .bashrc
     su $1

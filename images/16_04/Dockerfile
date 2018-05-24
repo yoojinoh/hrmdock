@@ -291,7 +291,8 @@ RUN pip install --upgrade \
     keras \
     ipython \
     ipdb \
-    graphviz
+    graphviz \
+    zmq
 RUN pip install pydot==1.0.28
 RUN pip install pyparsing==2.0.1
 RUN pip install --upgrade six --target="/usr/lib/python2.7/dist-packages"
