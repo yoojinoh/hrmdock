@@ -26,11 +26,14 @@ hrmdock_build_latest() {
 }
 
 hrmdock_run_new_container() {
-    # Run the image in a container at the location
-    # when the function is called.
+    # Run the image in a container at the location when the function is called.
+    #
+    # Should allow percistent containers by not copying the ssh keys.
+    # SSH keys, we should find a way to unmount the .ssh volume
     USER=$(whoami)
     ID=$(id -u ${USER})
     docker run -it \
+           --rm \
            --runtime=nvidia \
            -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
            -v $(pwd):/workspace \
@@ -48,10 +51,15 @@ hrmdock_import_ssh_keys() {
     echo "check ssh keys"
     if [ ! -d "${HOME}/.ssh" ]; then
         echo "Adding ssh keys"
-        mkdir .ssh
-        cp -r /ssh/* ${HOME}/.ssh
-        rm ${HOME}/.ssh/ssh_auth_sock
-        chmod 600 .ssh/*
+        # Symbolic link version, we have to figure out how
+        # to unmount volumes...
+        ln -s /ssh .ssh
+        # -------------------- Copy version -------------------
+        # mkdir .ssh
+        # cp -r /ssh/* ${HOME}/.ssh
+        # rm ${HOME}/.ssh/ssh_auth_sock
+        # chmod 600 .ssh/*
+        # -----------------------------------------------------
         eval `ssh-agent`
         ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
         export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
