@@ -45,19 +45,18 @@ hrmdock_import_ssh_keys() {
     # Usefull to import ssh keys in the container.
     # This will be temporarily mounted to the container and copied to
     # the user home directory, if using ssh agent, it will be started.
-    cd
-    if [ -d ".ssh" ]; then
+    echo "check ssh keys"
+    if [ ! -d "${HOME}/.ssh" ]; then
         echo "Adding ssh keys"
         mkdir .ssh
-        cp -r /ssh/* .ssh
-        rm .ssh/ssh_auth_sock
+        cp -r /ssh/* ${HOME}/.ssh
+        rm ${HOME}/.ssh/ssh_auth_sock
         chmod 600 .ssh/*
         eval `ssh-agent`
         ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
         export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
         ssh-add -l | grep "The agent has no identities" && ssh-add
     fi
-    cd -
 }
 
 hrmdock_create_user() {
