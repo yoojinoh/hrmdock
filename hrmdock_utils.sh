@@ -5,6 +5,7 @@
 # in this script.
 
 IMAGE_NAME=ubuntu/hrm_16.04
+IMAGE_DIRECTORY=images/16_04
 HRMDOCK_FILE=$(basename $BASH_SOURCE)
 HRMDOCK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 
@@ -20,8 +21,8 @@ hrmdock_test() {
 
 hrmdock_build_latest() {
     # This will build the latest image as described in the DockerFile
-    docker build -t $IMAGE_NAME $HRMDOCK_DIR/images/
-    echo "Build $IMAGE_NAME Done !"
+    docker build -t ${IMAGE_NAME} ${HRMDOCK_DIR}/${IMAGE_DIRECTORY}
+    echo "Build ${IMAGE_NAME} Done !"
 }
 
 hrmdock_run_new_container() {
