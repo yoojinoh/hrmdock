@@ -283,6 +283,10 @@ RUN cd /tmp && \
     cmake .. -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr/local/pinocchio/ && \
     make install && rm -rf /tmp/eigenpy
+RUN export PATH=/usr/local/pinocchio/bin:$PATH
+RUN export PKG_CONFIG_PATH=/usr/local/pinocchio/lib/pkgconfig:$PKG_CONFIG_PATH
+RUN export LD_LIBRARY_PATH=/usr/local/pinocchio/lib:$LD_LIBRARY_PATH
+RUN export PYTHONPATH=/usr/local/pinocchio/lib/python2.7/site-packages:$PYTHONPATH
 RUN cd /tmp && \
     git clone --recursive https://github.com/stack-of-tasks/pinocchio && \
     cd pinocchio && mkdir build && cd build && \
