@@ -1,13 +1,15 @@
 HRMDock
 ==========
 
-Bash project to use docker images
+Bash project to manage code dependencies using Dockerfiles.
 
 Start by:
 
     source hrmdock_utils.sh
 
-Importing will give you access to helper function to build images, and run containers. 
+It's good practice to have it your .bashrc
+
+Importing will give you access to helper function to build images, run containers or update your ubuntu machine.
 
 The workflow is as follows:
 
@@ -22,4 +24,6 @@ hrmdock_run_new_container will give you access to a container in user space wher
 
 We can add anything you want to the default Dockerfile (only commit to branches that I can review though), or you can reference to your own Dockerfile in hrmdock_utils.sh.
 
+Install a new machine or virtual machine:
 
+	hrm_update_this_machine
