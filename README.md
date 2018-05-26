@@ -27,3 +27,5 @@ We can add anything you want to the default Dockerfile (only commit to branches 
 Install a new machine or virtual machine:
 
 	hrm_update_this_machine
+
+This function creates a bash script from the Dockerfile.
