@@ -274,6 +274,19 @@ RUN apt-get install -y \
 #     git config --global credential.helper cache && \
 #     git config --global credential.helper 'cache --timeout=3600'
 
+###############################################################################
+# PINOCCHIO
+###############################################################################
+RUN cd /tmp && \
+    git clone --recursive https://github.com/stack-of-tasks/eigenpy && \
+    cd eigenpy && mkdir build && cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local && \
+    make install && rm -rf /tmp/eigenpy
+RUN cd /tmp && \
+    git clone --recursive https://github.com/stack-of-tasks/pinocchio && \
+    cd pinocchio && mkdir build && cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local && \
+    make install && rm -rf /tmp/pinocchio
 
 ###############################################################################
 # PYTHON MODULES
