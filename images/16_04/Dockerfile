@@ -305,6 +305,7 @@ RUN pip install --upgrade protobuf
 #########################################
 RUN mkdir /workspace
 RUN mkdir /ssh
+RUN mkdir /hrmdock
 #[/SSH IGNORE]
 
 ########################

@@ -38,9 +38,10 @@ hrmdock_run_new_container() {
            -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
            -v $(pwd):/workspace \
            -v ${HOME}/.ssh:/ssh \
-           ${IMAGE_NAME} \
+	   -v ${HRMDOCK_DIR}:/hrmdock \
+	   ${IMAGE_NAME} \
            bash -c "cd workspace \
-                    && source ${HRMDOCK_FILE} \
+                    && source /hrmdock/${HRMDOCK_FILE} \
                     && hrmdock_create_user ${USER} ${ID}"
 }
 
@@ -75,7 +76,7 @@ hrmdock_create_user() {
     usermod -aG sudo $1
     cd /home/$1
     echo "$1 ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$1
-    echo "source /workspace/${HRMDOCK_FILE}" >> .bashrc
+    echo "source /hrmdock/${HRMDOCK_FILE}" >> .bashrc
     echo "hrmdock_import_ssh_keys" >> .bashrc
     su $1
 }
