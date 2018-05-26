@@ -69,6 +69,11 @@ hrmdock_import_ssh_keys() {
 }
 
 hrmdock_create_user() {
+    # Create a user in the Gest with the name and id passed
+    # as argument. If these mach then files can be edited 
+    # regardless by the host or the gest.
+    # the created user has sudoers rights and we also import the ssh
+    # keys of the host.
     echo "Create user $1 with uid $2"
     # echo "$(id -u $1 &>/dev/null)"
     useradd -m -d /home/$1 $1
@@ -79,4 +84,16 @@ hrmdock_create_user() {
     echo "source /hrmdock/${HRMDOCK_FILE}" >> .bashrc
     echo "hrmdock_import_ssh_keys" >> .bashrc
     su $1
+}
+
+hrmdock_update_this_machine() {
+    # This function will create a bash script from the current
+    # Dockerfile and update this machine. It supposes that the machine's 
+    # version of the operating system agrees with the Dockerfile
+    cd ${HRMDOCK_DIR}
+    UPDATE_SCRIPT=scripts/autogenerate_update_script.sh
+    python scripts/generate_update_script.py \
+        ${HRMDOCK_DIR}/${IMAGE_DIRECTORY}/Dockerfile ${UPDATE_SCRIPT}
+    sudo bash ${UPDATE_SCRIPT}
+    cd -      
 }
