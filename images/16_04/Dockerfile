@@ -280,12 +280,14 @@ RUN apt-get install -y \
 RUN cd /tmp && \
     git clone --recursive https://github.com/stack-of-tasks/eigenpy && \
     cd eigenpy && mkdir build && cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr/local/pinocchio/ && \
     make install && rm -rf /tmp/eigenpy
 RUN cd /tmp && \
     git clone --recursive https://github.com/stack-of-tasks/pinocchio && \
     cd pinocchio && mkdir build && cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr/local/pinocchio/ && \
     make install && rm -rf /tmp/pinocchio
 
 ###############################################################################
