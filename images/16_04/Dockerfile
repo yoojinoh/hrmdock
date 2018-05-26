@@ -70,8 +70,6 @@ RUN apt-get install -y \
     ros-kinetic-control-toolbox \
     ros-kinetic-driver-common \
     ros-kinetic-ecto \
-    # ros-kinetic-fcl \ NOT ON KINETIC
-    # ros-kinetic-keyboard \ NOT ON KINETIC
     ros-kinetic-gazebo-ros-control \
     ros-kinetic-gazebo-ros-pkgs \
     ros-kinetic-joint-state-publisher \
@@ -96,6 +94,10 @@ RUN apt-get install -y \
     ros-kinetic-robot-self-filter \
     ros-kinetic-xacro  
 
+# TODO
+# ros-kinetic-fcl \ NOT ON KINETIC
+# ros-kinetic-keyboard \ NOT ON KINETIC
+
 RUN rosdep init && rosdep update
 
 RUN apt-get install -y \
@@ -116,13 +118,11 @@ RUN apt-get install -y \
     curl \
     curl \
     doxygen \
-    # emacs-snapshot \ # NOT FOUND ON XENIAL
     f2c \
     freeglut3 \
     freeglut3-dev \
     gdb \
     gfortran \
-    # git-lfs \  # NOT FOUND ON XENIAL # Replaced with libgflags2
     git-svn \
     imagemagick \
     iputils-ping \
@@ -132,7 +132,6 @@ RUN apt-get install -y \
     libc6-dev \
     libcairo2-dev \
     libconfig++8-dev \
-    # libdart5-dev \ # NOT FOUND ON XENIAL
     libdbus-1-dev \
     libedit-dev \
     libedit-dev \
@@ -143,7 +142,6 @@ RUN apt-get install -y \
     libf2c2-dev \
     libffi-dev \
     libgflags-dev \
-    # libgflags2 \ # NOT FOUND ON XENIAL # Replaced with libgflags2v5
     libgflags2v5 \
     libgirepository1.0-dev \
     libglew1.6-dev \
@@ -158,8 +156,6 @@ RUN apt-get install -y \
     libslicot0 \
     libssl-dev \
     libstartup-notification0-dev \
-    # libwxgtk2.8-dbg \ # NOT FOUND ON XENIAL
-    # libwxgtk2.8-dev \ # NOT FOUND ON XENIAL
     libx11-xcb-dev \
     libxcb-cursor-dev \
     libxcb-icccm4-dev \
@@ -211,6 +207,13 @@ RUN apt-get install -y \
     protobuf-compiler \
     protobuf-c-compiler 
 
+# TODO
+# git-lfs \  # NOT FOUND ON XENIAL # Replaced with libgflags2
+# libdart5-dev \ # NOT FOUND ON XENIAL
+# libgflags2 \ # NOT FOUND ON XENIAL # Replaced with libgflags2v5
+# emacs-snapshot \ # NOT FOUND ON XENIAL
+# libwxgtk2.8-dbg \ # NOT FOUND ON XENIAL
+# libwxgtk2.8-dev \ # NOT FOUND ON XENIAL
 
 #######
 # JAVA
