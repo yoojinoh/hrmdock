@@ -13,10 +13,14 @@ HRMDOCK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 # docker ps -a --latest
 # docker start -i ID_OF_YOUR_CONTAINER
 
-hrmdock_test() {
+hrmdock_config() {
     echo " - bash filename is : ${HRMDOCK_FILE}"
     echo " - script directory is in : ${HRMDOCK_DIR}"
     echo " - image name is : ${IMAGE_NAME}"
+}
+
+hrmdock_cd() {
+    cd ${HRMDOCK_DIR}
 }
 
 hrmdock_build_latest() {

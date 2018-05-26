@@ -101,6 +101,8 @@ RUN apt-get install -y \
 RUN rosdep init && rosdep update
 
 RUN apt-get install -y \
+    emacs \
+    synaptic \
     apt-file \
     alien \
     asciidoc \
