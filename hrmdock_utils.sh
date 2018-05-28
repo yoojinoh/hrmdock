@@ -3,9 +3,6 @@
 # Author: Jim Mainprice
 # Please contact mainprice@gmail.com if bugs or errors are found
 # in this script.
-
-IMAGE_NAME=ubuntu/hrm_16.04
-IMAGE_DIRECTORY=images/16_04
 HRMDOCK_FILE=$(basename $BASH_SOURCE)
 HRMDOCK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 
@@ -13,7 +10,7 @@ HRMDOCK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 # docker ps -a --latest
 # docker start -i ID_OF_YOUR_CONTAINER
 
-hrmdock_config() {
+hrmdock_print_config() {
     echo " - bash filename is : ${HRMDOCK_FILE}"
     echo " - script directory is in : ${HRMDOCK_DIR}"
     echo " - image name is : ${IMAGE_NAME}"
@@ -23,9 +20,14 @@ hrmdock_cd() {
     cd ${HRMDOCK_DIR}
 }
 
+hrmdock_load_config() {
+    source ${HRMDOCK_DIR}/hrmdock.config
+}
+
 hrmdock_build_latest() {
     # This will build the latest image as described in the DockerFile
-    docker build -t ${IMAGE_NAME} ${HRMDOCK_DIR}/${IMAGE_DIRECTORY}
+    hrmdock_load_config
+    docker build --no-cache -t ${IMAGE_NAME} ${HRMDOCK_DIR}/${IMAGE_DIRECTORY}
     echo "Build ${IMAGE_NAME} Done !"
 }
 
@@ -34,6 +36,7 @@ hrmdock_run_new_container() {
     #
     # Should allow percistent containers by not copying the ssh keys.
     # SSH keys, we should find a way to unmount the .ssh volume
+    hrmdock_load_config
     USER=$(whoami)
     ID=$(id -u ${USER})
     docker run -it \
@@ -42,11 +45,11 @@ hrmdock_run_new_container() {
            -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
            -v $(pwd):/workspace \
            -v ${HOME}/.ssh:/ssh \
-	   -v ${HRMDOCK_DIR}:/hrmdock \
-	   ${IMAGE_NAME} \
-           bash -c "cd workspace \
-                    && source /hrmdock/${HRMDOCK_FILE} \
-                    && hrmdock_create_user ${USER} ${ID}"
+	       -v ${HRMDOCK_DIR}:/hrmdock \
+    	   ${IMAGE_NAME} \
+               bash -c "cd /workspace \
+                        && source /hrmdock/${HRMDOCK_FILE} \
+                        && hrmdock_create_user ${USER} ${ID}"
 }
 
 hrmdock_import_ssh_keys() {
@@ -94,6 +97,7 @@ hrmdock_update_this_machine() {
     # This function will create a bash script from the current
     # Dockerfile and update this machine. It supposes that the machine's 
     # version of the operating system agrees with the Dockerfile
+    hrmdock_load_config
     cd ${HRMDOCK_DIR}
     UPDATE_SCRIPT=scripts/autogenerate_update_script.sh
     python scripts/generate_update_script.py \
