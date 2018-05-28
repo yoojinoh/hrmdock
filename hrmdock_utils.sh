@@ -98,6 +98,7 @@ hrmdock_create_user() {
     cd /home/$1
     echo "$1 ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$1
     echo "source /hrmdock/${HRMDOCK_FILE}" >> .bashrc
+    echo "export PATH=${PATH}" >> .bashrc
     if $IMPORT_SSH_KEYS ; then 
         echo "hrmdock_import_ssh_keys" >> .bashrc
     fi
