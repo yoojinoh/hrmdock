@@ -39,6 +39,19 @@ hrmdock_build_latest() {
     fi
 }
 
+hrmdock_update_this_machine() {
+    # This function will create a bash script from the current
+    # Dockerfile and update this machine. It supposes that the machine's 
+    # version of the operating system agrees with the Dockerfile
+    hrmdock_load_config
+    cd ${HRMDOCK_DIR}
+    UPDATE_SCRIPT=scripts/autogenerate_update_script.sh
+    python scripts/generate_update_script.py \
+        ${HRMDOCK_DIR}/${IMAGE_DIRECTORY}/Dockerfile ${UPDATE_SCRIPT}
+    sudo bash ${UPDATE_SCRIPT}
+    cd -      
+}
+
 hrmdock_run_new_container() {
     # Run the image in a container at the location when the function is called.
     #
@@ -61,6 +74,28 @@ hrmdock_run_new_container() {
                bash -c "cd /workspace \
                         && source /hrmdock/${HRMDOCK_FILE} \
                         && hrmdock_create_user ${USER} ${ID}"
+}
+
+hrmdock_run_container() {
+    # Start and run a shell a container given as argument.
+    # supposes that container has a user whoami and a directory workspace
+    CONTAINTER_ID=$1
+    echo "Starting container ${CONTAINTER_ID}"
+    docker start ${CONTAINTER_ID}
+    docker exec -it ${CONTAINTER_ID} bash -c "cd /workspace \
+                                              && su $(whoami)"
+}
+
+hrmdock_run_latest_container() {
+    # Calls run container on the latest created container.
+    CONTAINTER_ID=$(docker ps -aq --latest | awk '{print $1}')
+    hrmdock_run_container $CONTAINTER_ID
+}
+
+hrmdock_run_default_container() {
+    # Calls run container on the default container.
+    hrmdock_load_config
+    hrmdock_run_container $DEFAULT_CONTAINER_ID
 }
 
 hrmdock_import_ssh_keys() {
@@ -107,17 +142,4 @@ hrmdock_create_user() {
     fi
     cd /workspace
     su $1
-}
-
-hrmdock_update_this_machine() {
-    # This function will create a bash script from the current
-    # Dockerfile and update this machine. It supposes that the machine's 
-    # version of the operating system agrees with the Dockerfile
-    hrmdock_load_config
-    cd ${HRMDOCK_DIR}
-    UPDATE_SCRIPT=scripts/autogenerate_update_script.sh
-    python scripts/generate_update_script.py \
-        ${HRMDOCK_DIR}/${IMAGE_DIRECTORY}/Dockerfile ${UPDATE_SCRIPT}
-    sudo bash ${UPDATE_SCRIPT}
-    cd -      
 }
