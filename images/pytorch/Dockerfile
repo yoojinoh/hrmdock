@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
      rm -rf /var/lib/apt/lists/*
 
 
-RUN curl -o ~/miniconda.sh -O  https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh  && \
+RUN curl -o ~/miniconda.sh -O \
+     https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh  && \
      chmod +x ~/miniconda.sh && \
      ~/miniconda.sh -b -p /opt/conda && \
      rm ~/miniconda.sh && \
@@ -160,30 +161,34 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # PYTHON MODULES
 ###############################################################################
 
-RUN pip install --upgrade pip
-RUN pip install pyopenssl
-RUN pip install --upgrade \
+RUN conda install \
+    pyopenssl \
+    numpy \
+    scipy \
+    pyopenssl \
     colorama \
     matplotlib \
     ndg-httpsclient \
-    numpy \
     pyasn1 \
-    schedule \
-    scipy \
-    sklearn \
+    scikit-learn \
     virtualenv \
     appdirs \
     h5py \
     keras \
     ipython \
-    ipdb \
-    graphviz \
-    zmq
-RUN pip install pydot==1.0.28
-RUN pip install pyparsing==2.0.1
-RUN pip install --upgrade six --target="/usr/lib/python2.7/dist-packages"
-RUN pip install appdirs
-RUN pip install --upgrade protobuf
+    graphviz 
+
+# RUN conda install -c pchrapka zmq
+RUN conda install -c conda-forge ipdb
+RUN conda install -c gomss-nowcast schedule 
+
+# RUN pip install --upgrade pip
+# RUN pip install pyopenssl
+# RUN pip install pydot==1.0.28 # TODO why is this not working???
+# RUN pip install pyparsing==2.0.1
+# RUN pip install --upgrade six --target="/usr/lib/python2.7/dist-packages"
+# RUN pip install appdirs
+# RUN pip install --upgrade protobuf
 
 #########################################
 # for convenience, to map workspace in it
@@ -191,6 +196,8 @@ RUN pip install --upgrade protobuf
 
 WORKDIR /workspace
 RUN chmod -R a+w /workspace
+RUN mkdir /ssh
+RUN mkdir /hrmdock
 
 ########################
 # start ssh agent

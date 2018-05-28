@@ -16,7 +16,7 @@ The workflow is as follows:
     cd $CODE_DIR                  # where your code lives
     git clone whatever_code.git
     hrmdock_run_new_container
-    cd /workspace                 # where $CODE_DIR is mounted on the guest
+    ls                            # lists the $CODE_DIR
     sudo pip install library      # install anything you want
     python train.py               # run your things
 

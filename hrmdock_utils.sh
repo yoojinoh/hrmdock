@@ -27,8 +27,16 @@ hrmdock_load_config() {
 hrmdock_build_latest() {
     # This will build the latest image as described in the DockerFile
     hrmdock_load_config
-    docker build --no-cache -t ${IMAGE_NAME} ${HRMDOCK_DIR}/${IMAGE_DIRECTORY}
-    echo "Build ${IMAGE_NAME} Done !"
+    # CACHE=--no-cache
+    echo "CACHE=${CACHE}"
+    if docker build ${CACHE} -t ${IMAGE_NAME} \
+        ${HRMDOCK_DIR}/${IMAGE_DIRECTORY}; then
+        # Do nothing
+        echo "Build ${IMAGE_NAME} Done !"
+    :
+    else
+        echo "Error building image !"
+    fi
 }
 
 hrmdock_run_new_container() {
@@ -61,7 +69,7 @@ hrmdock_import_ssh_keys() {
         echo "Adding ssh keys"
         # Symbolic link version, we have to figure out how
         # to unmount volumes...
-        ln -s /ssh .ssh
+        ln -s /ssh ${HOME}/.ssh
         # -------------------- Copy version -------------------
         # mkdir .ssh
         # cp -r /ssh/* ${HOME}/.ssh
@@ -69,8 +77,8 @@ hrmdock_import_ssh_keys() {
         # chmod 600 .ssh/*
         # -----------------------------------------------------
         eval `ssh-agent`
-        ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-        export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+        ln -sf "$SSH_AUTH_SOCK" ${HOME}/.ssh/ssh_auth_sock
+        export SSH_AUTH_SOCK=${HOME}/.ssh/ssh_auth_sock
         ssh-add -l | grep "The agent has no identities" && ssh-add
     fi
 }
@@ -81,6 +89,7 @@ hrmdock_create_user() {
     # regardless by the host or the gest.
     # the created user has sudoers rights and we also import the ssh
     # keys of the host.
+    hrmdock_load_config
     echo "Create user $1 with uid $2"
     # echo "$(id -u $1 &>/dev/null)"
     useradd -m -d /home/$1 $1
@@ -89,7 +98,10 @@ hrmdock_create_user() {
     cd /home/$1
     echo "$1 ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$1
     echo "source /hrmdock/${HRMDOCK_FILE}" >> .bashrc
-    echo "hrmdock_import_ssh_keys" >> .bashrc
+    if $IMPORT_SSH_KEYS ; then 
+        echo "hrmdock_import_ssh_keys" >> .bashrc
+    fi
+    cd /workspace
     su $1
 }
 
