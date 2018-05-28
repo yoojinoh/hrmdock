@@ -277,22 +277,23 @@ RUN apt-get install -y \
 ###############################################################################
 # PINOCCHIO
 ###############################################################################
-RUN cd /tmp && \
-    git clone --recursive https://github.com/stack-of-tasks/eigenpy && \
-    cd eigenpy && mkdir build && cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX=/usr/local/pinocchio/ && \
-    make install && rm -rf /tmp/eigenpy
-RUN export PATH=/usr/local/pinocchio/bin:$PATH
-RUN export PKG_CONFIG_PATH=/usr/local/pinocchio/lib/pkgconfig:$PKG_CONFIG_PATH
-RUN export LD_LIBRARY_PATH=/usr/local/pinocchio/lib:$LD_LIBRARY_PATH
-RUN export PYTHONPATH=/usr/local/pinocchio/lib/python2.7/site-packages:$PYTHONPATH
-RUN cd /tmp && \
-    git clone --recursive https://github.com/stack-of-tasks/pinocchio && \
-    cd pinocchio && mkdir build && cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX=/usr/local/pinocchio/ && \
-    make install && rm -rf /tmp/pinocchio
+# RUN export PINOCCHIO_INSTALL=/usr/local/pinocchio/
+# RUN cd /tmp && \
+#     git clone --recursive https://github.com/stack-of-tasks/eigenpy && \
+#     cd eigenpy && mkdir build && cd build && \
+#     cmake .. -DCMAKE_BUILD_TYPE=Release \
+#         -DCMAKE_INSTALL_PREFIX=${PINOCCHIO_INSTALL} && \
+#     make install && rm -rf /tmp/eigenpy
+# RUN export PATH=${PINOCCHIO_INSTALL}/bin:$PATH
+# RUN export PKG_CONFIG_PATH=${PINOCCHIO_INSTALL}/lib/pkgconfig:$PKG_CONFIG_PATH
+# RUN export LD_LIBRARY_PATH=${PINOCCHIO_INSTALL}/lib:$LD_LIBRARY_PATH
+# RUN export PYTHONPATH=${PINOCCHIO_INSTALL}/lib/python2.7/site-packages:$PYTHONPATH
+# RUN cd /tmp && \
+#     git clone --recursive https://github.com/stack-of-tasks/pinocchio && \
+#     cd pinocchio && mkdir build && cd build && \
+#     cmake .. -DCMAKE_BUILD_TYPE=Release \
+#         -DCMAKE_INSTALL_PREFIX=${PINOCCHIO_INSTALL} && \
+#     make install && rm -rf /tmp/pinocchio
 
 ###############################################################################
 # PYTHON MODULES
