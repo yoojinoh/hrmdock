@@ -47,8 +47,11 @@ hrmdock_run_new_container() {
     hrmdock_load_config
     USER=$(whoami)
     ID=$(id -u ${USER})
+    if ${TEMPORARY_CONTAINER}; then
+        OPTS="--rm"
+    fi
     docker run -it \
-           --rm \
+           ${OPTS} \
            --runtime=nvidia \
            -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
            -v $(pwd):/workspace \
