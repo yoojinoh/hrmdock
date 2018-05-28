@@ -27,8 +27,8 @@ RUN curl -o ~/miniconda.sh -O \
      /opt/conda/bin/conda clean -ya
 ENV PATH /opt/conda/bin:$PATH
 # This must be done before pip so that requirements.txt is available
-WORKDIR /opt/pytorch
-COPY . .
+# WORKDIR /opt/pytorch
+# COPY . .
 
 # RUN git submodule update --init
 # RUN TORCH_CUDA_ARCH_LIST="3.5 5.2 6.0 6.1 7.0+PTX" TORCH_NVCC_FLAGS="-Xfatbin -compress-all" \

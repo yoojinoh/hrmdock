@@ -27,7 +27,7 @@ hrmdock_load_config() {
 hrmdock_build_latest() {
     # This will build the latest image as described in the DockerFile
     hrmdock_load_config
-    # CACHE=--no-cache
+    # CACHE=--no-cache=true
     echo "CACHE=${CACHE}"
     if docker build ${CACHE} -t ${IMAGE_NAME} \
         ${HRMDOCK_DIR}/${IMAGE_DIRECTORY}; then
