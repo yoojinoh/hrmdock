@@ -98,6 +98,12 @@ hrmdock_run_default_container() {
     hrmdock_run_container $DEFAULT_CONTAINER_ID
 }
 
+hrmdock_stop_default_container() {
+    # Calls run container on the default container.
+    hrmdock_load_config
+    docker stop $DEFAULT_CONTAINER_ID
+}
+
 hrmdock_import_ssh_keys() {
     # Usefull to import ssh keys in the container.
     # This will be temporarily mounted to the container and copied to
@@ -135,10 +141,14 @@ hrmdock_create_user() {
     usermod -aG sudo $1
     cd /home/$1
     echo "$1 ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$1
-    echo "source /hrmdock/${HRMDOCK_FILE}" >> .bashrc
-    echo "export PATH=${PATH}" >> .bashrc
-    if $IMPORT_SSH_KEYS ; then 
-        echo "hrmdock_import_ssh_keys" >> .bashrc
+
+    if grep -Fxq .bashrc "/hrmdock/${HRMDOCK_FILE}" 
+        then
+            echo "source /hrmdock/${HRMDOCK_FILE}" >> .bashrc
+            echo "export PATH=${PATH}" >> .bashrc
+            echo "hrmdock_import_ssh_keys" >> .bashrc
+        else
+            echo "user already created !"
     fi
     cd /workspace
     su $1

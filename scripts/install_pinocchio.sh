@@ -1,5 +1,5 @@
 #!/bin/bash
-NB_CPUS=4
+NB_CPUS=20
 PINOCCHIO_INSTALL=/usr/local/pinocchio/
 
 # Install eigenpy
@@ -27,5 +27,5 @@ echo "export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:\$PKG_CONFIG_PATH" >> ${HOME}/.b
 echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:\$LD_LIBRARY_PATH" >> ${HOME}/.bashrc
 echo "export PYTHONPATH=${PYTHONPATH}:\$PYTHONPATH" >> ${HOME}/.bashrc
 
-rm -rf /tmp/eigenpy
-rm -rf /tmp/pinocchio
+# rm -rf /tmp/eigenpy
+# rm -rf /tmp/pinocchio
