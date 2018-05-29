@@ -207,7 +207,10 @@ RUN apt-get install -y \
     xmlto \
     xutils-dev \
     protobuf-compiler \
-    protobuf-c-compiler 
+    protobuf-c-compiler \
+    samba \
+    gvfs-backends
+
 
 # TODO
 # git-lfs \  # NOT FOUND ON XENIAL # Replaced with libgflags2
