@@ -5,7 +5,7 @@ Bash project to manage code dependencies using Dockerfiles.
 
 Start by:
 
-    source hrmdock_utils.sh
+    source hrmdock.sh
 
 It's good practice to have it your .bashrc
 
