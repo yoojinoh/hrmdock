@@ -1,5 +1,4 @@
-#!/bin/bash
-
+# !/bin/bash
 # Author: Jim Mainprice
 # Please contact mainprice@gmail.com if bugs or errors are found
 # in this script.
@@ -60,9 +59,11 @@ hrmdock_run_new_container() {
     hrmdock_load_config
     USER=$(whoami)
     ID=$(id -u ${USER})
-    if ${TEMPORARY_CONTAINER}; then
+    OPTS=""
+    if $TEMPORARY_CONTAINER ; then
         OPTS="--rm"
     fi
+    echo ${OPTS}
     docker run -it \
            ${OPTS} \
            --runtime=nvidia \
