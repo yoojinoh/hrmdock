@@ -51,11 +51,26 @@ hrmdock_update_this_machine() {
     cd -      
 }
 
+hrmdock_run_tf_container() {
+    # Run the basic tf gpu image
+    OPTS=""
+    if $TEMPORARY_CONTAINER ; then
+        OPTS="--rm"
+    fi
+    echo ${OPTS}
+    nvidia-docker run -it \
+           ${OPTS} \
+           -p 8888:8888 \
+           tensorflow/tensorflow:latest-gpu
+}
+
+
 hrmdock_run_new_container() {
     # Run the image in a container at the location when the function is called.
     #
     # Should allow percistent containers by not copying the ssh keys.
     # SSH keys, we should find a way to unmount the .ssh volume
+    # The ports are rerouted to get access to the proper tensor board things.
     hrmdock_load_config
     USER=$(whoami)
     ID=$(id -u ${USER})
@@ -70,6 +85,8 @@ hrmdock_run_new_container() {
            -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
            -v $(pwd):/workspace \
            -v ${HOME}/.ssh:/ssh \
+           -p 0.0.0.0:6006:6006 \
+           -p 8888:8888 \
 	       -v ${HRMDOCK_DIR}:/hrmdock \
     	   ${IMAGE_NAME} \
                bash -c "cd /workspace \
