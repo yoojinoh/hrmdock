@@ -11,7 +11,7 @@ CUDA_VERSION?=9.0
 CUDNN_VERSION?=7
 TEST=tests/
 SRC?=$(shell dirname `pwd`)
-USER_ID=$(shell dirname `uid`)
+USER_ID=$(shell id -u)
 
 build:
 	docker build -t keras --build-arg python_version=$(PYTHON_VERSION) --build-arg cuda_version=$(CUDA_VERSION) --build-arg cudnn_version=$(CUDNN_VERSION) --build-arg user_id=$(USER_ID) -f $(DOCKER_FILE) .

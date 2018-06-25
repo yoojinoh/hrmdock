@@ -26,6 +26,7 @@ RUN wget --quiet --no-check-certificate https://repo.continuum.io/miniconda/Mini
 
 # Install Python packages and keras
 ARG user_id=1000
+RUN echo "user_id : ${user_id}"
 ENV NB_USER keras
 ENV NB_UID ${user_id}
 
