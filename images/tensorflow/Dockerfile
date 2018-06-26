@@ -90,13 +90,8 @@ RUN apt-get update && \
     swig \
     python-testresources \
     xvfb
-
 RUN pip install --upgrade pip
-# RUN pip3 install --upgrade pip3
-
 RUN pip3 install pyglet pyopengl
-RUN pip3 install tensorflow-gpu
-
 RUN pip3 install matplotlib
 RUN pip3 install --upgrade \
     colorama \
@@ -115,10 +110,10 @@ RUN pip3 install --upgrade \
     graphviz \
     zmq \
     box2d
-
-RUN pip3 install -U numpy==1.11.0.
-
 RUN pip3 install gym
+RUN pip3 install baselines
+RUN pip3 install tensorflow-gpu
+RUN pip3 install -U numpy==1.11.0.
 
 # COPY run_jupyter.sh /
 
