@@ -82,7 +82,8 @@ hrmdock_run_new_container() {
     docker run -it \
            ${OPTS} \
            --runtime=nvidia \
-           -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
+           -e DISPLAY \
+           -v /tmp/.X11-unix:/tmp/.X11-unix \
            -v $(pwd):/workspace \
            -v ${HOME}/.ssh:/ssh \
            -p 0.0.0.0:6006:6006 \

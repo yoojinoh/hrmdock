@@ -1,4 +1,5 @@
 FROM ubuntu/hrm_16.04
+# FROM tensorflow/tensorflow:latest-gpu
 
 LABEL maintainer "NVIDIA CORPORATION <cudatools@nvidia.com>"
 
@@ -35,9 +36,10 @@ ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
 
 # nvidia-container-runtime
 ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+ENV NVIDIA_DRIVER_CAPABILITIES graphics,compat32,utility,display,compute
 ENV NVIDIA_REQUIRE_CUDA "cuda>=9.0"
 
+#compute,utility,graphics # WARNING this line breaks glxgears.
 # -------------------------------------------------------------------------
 # (9.0/runtime/Dockerfile)
 
@@ -76,24 +78,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
             libcudnn7-dev=$CUDNN_VERSION-1+cuda9.0 && \
     rm -rf /var/lib/apt/lists/*
 
+
 # -------------------------------------------------------------------------
 # -------------------------------------------------------------------------
 # -------------------------------------------------------------------------
-# FROM tensorflow/tensorflow:latest-gpu
 
 RUN apt-get update && \
     apt-get install -y \
     sudo \
     python3-pip \
     swig \
-    python-testresources
-
+    python-testresources \
+    xvfb
 RUN pip install --upgrade pip
-RUN pip3 install --upgrade pip3
-
 RUN pip3 install pyglet pyopengl
-RUN pip3 install tensorflow-gpu
-
 RUN pip3 install matplotlib
 RUN pip3 install --upgrade \
     colorama \
@@ -112,13 +110,10 @@ RUN pip3 install --upgrade \
     graphviz \
     zmq \
     box2d
-
+RUN pip3 install gym
+RUN pip3 install baselines
+RUN pip3 install tensorflow-gpu
 RUN pip3 install -U numpy==1.11.0.
-
-# RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-# RUN echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-# RUN apt-get update && \
-# 	apt-get install sublime-text
 
 # COPY run_jupyter.sh /
 
@@ -133,4 +128,5 @@ RUN pip3 install -U numpy==1.11.0.
 # WORKDIR "/notebooks"
 
 # CMD ["/run_jupyter.sh", "--allow-root"]
+
 
