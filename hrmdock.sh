@@ -182,14 +182,13 @@ hrmdock_create_user() {
     usermod -aG sudo $1
     cd /home/$1
     echo "$1 ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$1
-
     if grep -Fxq .bashrc "/hrmdock/${HRMDOCK_FILE}" 
         then
-            echo "source /hrmdock/${HRMDOCK_FILE}" >> .bashrc
-            echo "export PATH=${PATH}" >> .bashrc
-            echo "hrmdock_import_ssh_keys" >> .bashrc
-        else
             echo "user already created !"
+        else
+	    echo "source /hrmdock/${HRMDOCK_FILE}" >> .bashrc
+	    echo "export PATH=${PATH}" >> .bashrc
+    	    echo "hrmdock_import_ssh_keys" >> .bashrc
     fi
     cd /workspace
     su $1
