@@ -23,13 +23,27 @@ hrmdock_load_config() {
     source ${HRMDOCK_DIR}/hrmdock.config
 }
 
+hrmdock_build_all() {
+    declare -A directories
+    directories[hrm_16.04]=16_04
+    directories[hrm_cuda]=cuda
+    directories[hrm_tensorflow]=tensorflow
+    CACHE=--no-cache=true
+    echo "CACHE=${CACHE}"
+    for name in "${!directories[@]}";
+    do :
+       docker build ${CACHE} -t ${name}:latest \
+	      ${HRMDOCK_DIR}/images/${directories[${name}]} 
+    done
+}
+
 hrmdock_build_latest() {
     # This will build the latest image as described in the DockerFile
     hrmdock_load_config
     # CACHE=--no-cache=true
     echo "CACHE=${CACHE}"
     if docker build ${CACHE} -t ${IMAGE_NAME} \
-        ${HRMDOCK_DIR}/${IMAGE_DIRECTORY}; then
+        ${HRMDOCK_DIR}/images/${IMAGE_DIRECTORY}; then
         # Do nothing
         echo "Build ${IMAGE_NAME} Done !"
     :
@@ -46,7 +60,7 @@ hrmdock_update_this_machine() {
     cd ${HRMDOCK_DIR}
     UPDATE_SCRIPT=scripts/autogenerate_update_script.sh
     python scripts/generate_update_script.py \
-        ${HRMDOCK_DIR}/${IMAGE_DIRECTORY}/Dockerfile ${UPDATE_SCRIPT}
+        ${HRMDOCK_DIR}/images/${IMAGE_DIRECTORY}/Dockerfile ${UPDATE_SCRIPT}
     sudo bash ${UPDATE_SCRIPT}
     cd -      
 }
@@ -86,8 +100,8 @@ hrmdock_run_new_container() {
            -v /tmp/.X11-unix:/tmp/.X11-unix \
            -v $(pwd):/workspace \
            -v ${HOME}/.ssh:/ssh \
-           -p 0.0.0.0:6006:6006 \
-           -p 8888:8888 \
+           -p ${PORT_TENSORBOARD}:${PORT_TENSORBOARD} \
+           -p ${PORT_MAIN}:${PORT_MAIN} \
 	       -v ${HRMDOCK_DIR}:/hrmdock \
     	   ${IMAGE_NAME} \
                bash -c "cd /workspace \
