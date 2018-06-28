@@ -1,4 +1,4 @@
-FROM ubuntu/hrm_cuda:latest
+FROM hrm_cuda:latest
 
 RUN apt-get update && \
     apt-get install -y \

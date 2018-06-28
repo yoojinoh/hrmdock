@@ -1,4 +1,4 @@
-FROM ubuntu/hrm_16.04:latest
+FROM hrm_16.04:latest
 
 LABEL maintainer "Jim Mainprice <mainprice@gmail.com>"
 

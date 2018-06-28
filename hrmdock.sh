@@ -29,7 +29,8 @@ hrmdock_build_all() {
         'hrm_cuda'
         'hrm_tensorflow'
         )
-    CACHE=--no-cache=true
+    CACHE=""
+    # CACHE=--no-cache=true
     echo "CACHE=${CACHE}"
     for name in "${images[@]}";
     do :
