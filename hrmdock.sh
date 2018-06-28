@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/bin/bash
 # Author: Jim Mainprice
 # Please contact mainprice@gmail.com if bugs or errors are found
 # in this script.
@@ -24,16 +24,24 @@ hrmdock_load_config() {
 }
 
 hrmdock_build_all() {
-    declare -A directories
-    directories[hrm_16.04]=16_04
-    directories[hrm_cuda]=cuda
-    directories[hrm_tensorflow]=tensorflow
+    images=(
+        'hrm_16.04'
+        'hrm_cuda'
+        'hrm_tensorflow'
+        )
     CACHE=--no-cache=true
     echo "CACHE=${CACHE}"
-    for name in "${!directories[@]}";
+    for name in "${images[@]}";
     do :
-       docker build ${CACHE} -t ${name}:latest \
-	      ${HRMDOCK_DIR}/images/${directories[${name}]} 
+        case $name in
+            'hrm_16.04')        directory='16_04';;
+            'hrm_cuda')         directory='cuda';;
+            'hrm_tensorflow')   directory='tensorflow';;
+        esac
+        echo $directory
+        echo "building ${name}:latest in ${directory} ..."
+        docker build ${CACHE} -t ${name}:latest \
+            ${HRMDOCK_DIR}/images/${directory}
     done
 }
 
