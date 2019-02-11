@@ -83,20 +83,20 @@ RUN apt-get install -y \
     ros-kinetic-ompl \
     ros-kinetic-openni-* \
     ros-kinetic-pcl-conversions \
-    ros-kinetic-qt-build \
     ros-kinetic-realtime-tools \
     ros-kinetic-robot-state-publisher \
     ros-kinetic-ros-control \
     ros-kinetic-ros-controllers \
     ros-kinetic-tf-conversions \
     ros-kinetic-tf-conversions \
-    ros-kinetic-turtlebot-* \
     ros-kinetic-robot-self-filter \
     ros-kinetic-xacro  
 
 # TODO
 # ros-kinetic-fcl \ NOT ON KINETIC
 # ros-kinetic-keyboard \ NOT ON KINETIC
+# ros-kinetic-turtlebot-* \ Does not install anymore...
+# ros-kinetic-qt-build \ Does not install anymore
 
 RUN rosdep init && rosdep update
 
