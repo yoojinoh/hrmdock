@@ -1,6 +1,7 @@
 # [SSH IGNORE]
 
-FROM ubuntu:14.04
+# FROM ubuntu:14.04
+FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu14.04
 MAINTAINER Vincent Berenz <vincentberenz@tuebingen.mpg.de>
 
 ###################################################################################
@@ -272,8 +273,8 @@ RUN git lfs install --skip-smudge && \
 
 RUN pip install --upgrade pip
 RUN pip install pyopenssl
-RUN pip install --upgrade \
-    colorama \
+RUN pip install --upgrade --ignore-installed \
+    # colorama \
     matplotlib \
     ndg-httpsclient \
     numpy \
@@ -286,7 +287,7 @@ RUN pip install --upgrade \
     h5py \
     keras \
     ipython \
-    ipdb \
+    # ipdb \
     graphviz
 RUN pip install pydot==1.0.28
 RUN pip install pyparsing==2.0.1

@@ -6,5 +6,8 @@ RUN pip install --upgrade --ignore-installed \
     testresources \
     tensorflow-gpu==1.9.0rc1 \
     scikit-image \
-    pydot
-    
+    pydot \
+    tqdm \
+    pyglet \
+    h5py \
+    six
