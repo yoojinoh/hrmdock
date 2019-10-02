@@ -187,6 +187,18 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6B05F25D762E3157
 # -libccd-dev is now installed from apt-get instead of adding the repository to sources.list.d
 # -libglew-dev instead of liblew1.6-dev
 # -libfcl-dev
+#
+# TODO 
+#   MOVEIT needs
+#   sudo apt-get install libfcl-0.5-dev  
+# 
+#   DART needs
+#   sudo apt-get install libfcl-dev
+#   sudo apt-get install libdart-core5-dev 
+#   sudo apt-add-repository ppa:dartsim/ppa
+
+# SOLVED apt-get install ros-kinetic-dartsim
+# 
 # 
 # the following repositories are no longer supported under 16.04:
 # fcl-debs
@@ -424,6 +436,18 @@ RUN apt-get -y autoremove
 RUN apt-get -y update && apt-get -y upgrade  
 #[/BASH UPDATE]
 
+
+############################
+# apply new changes (JIM)
+############################
+# Get the ROS PPA
+RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list && \
+    wget http://packages.ros.org/ros.key -O - | apt-key add -
+RUN apt-add-repository ppa:dartsim/ppa
+RUN apt-get install ros-kinetic-dartsim
+RUN apt-get install ros-kinetic-moveit
+
+
 ########################
 # start ssh agent
 ########################
@@ -433,3 +457,4 @@ RUN eval `ssh-agent -s`
 # Clean the apt cache to always have up to date packages #
 ##########################################################
 RUN apt-get clean
+

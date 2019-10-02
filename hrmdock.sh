@@ -103,9 +103,7 @@ hrmdock_run_new_container() {
     echo ${OPTS}
     docker run -it \
            ${OPTS} \
-           --runtime=nvidia \
            -e DISPLAY \
-           -v /tmp/.X11-unix:/tmp/.X11-unix \
            -v $(pwd):/workspace \
            -v ${HOME}/.ssh:/ssh \
            -p ${PORT_TENSORBOARD}:${PORT_TENSORBOARD} \
@@ -191,5 +189,5 @@ hrmdock_create_user() {
     	    echo "hrmdock_import_ssh_keys" >> .bashrc
     fi
     cd /workspace
-    su $1
+    su $1 -c bash
 }
