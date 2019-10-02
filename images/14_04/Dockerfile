@@ -294,6 +294,7 @@ RUN pip install pyparsing==2.0.1
 RUN pip install --upgrade six --target="/usr/lib/python2.7/dist-packages"
 RUN pip install appdirs
 RUN pip install --upgrade protobuf
+RUN pip install treep
 
 #[SSH IGNORE]
 #########################################

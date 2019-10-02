@@ -1,6 +1,6 @@
 # [BASH IGNORE]
 
-FROM ubuntu:18.04
+FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu18.04
 MAINTAINER Vincent Berenz <vincentberenz@tuebingen.mpg.de>
 
 ###################################################################################
@@ -256,8 +256,7 @@ RUN apt-get install -y libgoogle-glog-dev    `# library that implements applicat
                luarocks              `# Development files for the Lua language`\
                libxdg-basedir-dev    `# Implementation of the XDG Base Directory Specifications `\
                protobuf-compiler     `# messages formatting package`\
-               protobuf-c-compiler   `# messages formatting package`  #\
-
+               protobuf-c-compiler   `# messages formatting package`
 
 # SL code dependencies
 RUN apt-get install -y libdbus-1-dev         `# SL: shared memory.`\
@@ -269,7 +268,7 @@ RUN apt-get install -y libdbus-1-dev         `# SL: shared memory.`\
                libssl-dev            `# SL?: Secure Sockets Layer toolkit`\  
                libstartup-notification0-dev     `# SL?: library for program launch feedback `\
                libwxgtk3.0-0v5              `# SL?: simulator? wxWidgets Cross-platform C++ GUI toolkit `\
-               libwxgtk3.0-0v5-dbg          `# SL?: simulator? wxWidgets Cross-platform C++ GUI toolkit `\
+               # libwxgtk3.0-0v5-dbg          `# SL?: simulator? wxWidgets Cross-platform C++ GUI toolkit `\
                libwxgtk3.0-dev              `# SL?: simulator? wxWidgets Cross-platform C++ GUI toolkit  `\
                libx11-xcb-dev               `# SL?: simulator? Xlib/XCB interface library`\
                libxcb-cursor-dev            `# SL?: simulator? X library `\
@@ -417,6 +416,7 @@ RUN mkdir /ssh
 ############################################
 RUN useradd -p $(openssl passwd -1 bamboo) bamboo
 RUN usermod -aG sudo bamboo
+RUN usermod -u 111 bamboo
 #[/BASH IGNORE]
 
 ############################
@@ -450,6 +450,14 @@ RUN eval `ssh-agent -s`
                 
 #RUN apt-get install -y robotpkg-gepetto-viewer        # LAAS 3D robot viewer
 #RUN apt-get install -y robotpkg-py27-sot-torque-control # Python bindings
+
+#[SSH IGNORE]
+#########################################
+# for convenience, to map workspace in it
+#########################################
+# RUN mkdir /workspace    # already there
+# RUN mkdir /ssh          # already there
+RUN mkdir /hrmdock
 
 ##########################################################
 # Clean the apt cache to always have up to date packages #

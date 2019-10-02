@@ -150,6 +150,7 @@ hrmdock_import_ssh_keys() {
     echo "check ssh keys"
     if [ ! -d "${HOME}/.ssh" ]; then
         echo "Adding ssh keys"
+        echo "SSH_AUTH_SOCK : ${SSH_AUTH_SOCK}"
         # Symbolic link version, we have to figure out how
         # to unmount volumes...
         ln -s /ssh ${HOME}/.ssh

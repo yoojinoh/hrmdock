@@ -1,13 +1,1 @@
-FROM hrm_cuda:latest
-RUN pip install --upgrade pip
-# RUN apt-get update && \
-#    apt-get install -y \
-RUN pip install --upgrade --ignore-installed \
-    testresources \
-    tensorflow-gpu==1.9.0rc1 \
-    scikit-image \
-    pydot \
-    tqdm \
-    pyglet \
-    h5py \
-    six
+FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu16.04
