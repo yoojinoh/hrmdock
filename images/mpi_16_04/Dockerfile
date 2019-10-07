@@ -193,9 +193,10 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6B05F25D762E3157
 #   sudo apt-get install libfcl-0.5-dev  
 # 
 #   DART needs
+#   sudo apt-add-repository ppa:dartsim/ppa
 #   sudo apt-get install libfcl-dev
 #   sudo apt-get install libdart-core5-dev 
-#   sudo apt-add-repository ppa:dartsim/ppa
+
 
 # SOLVED apt-get install ros-kinetic-dartsim
 # 

@@ -463,3 +463,8 @@ RUN mkdir /hrmdock
 # Clean the apt cache to always have up to date packages #
 ##########################################################
 RUN apt-get clean
+
+#--------------- NEW -----------
+# RUN apt-get install ros-melodic-dartsim
+RUN apt-add-repository ppa:dartsim/ppa
+RUN apt-get install -y libdart6-dev
