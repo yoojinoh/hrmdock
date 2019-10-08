@@ -113,12 +113,13 @@ hrmdock_run_new_container() {
            -v ${HOME}/.ssh:/ssh \
            -p ${PORT_TENSORBOARD}:${PORT_TENSORBOARD} \
            -p ${PORT_MAIN}:${PORT_MAIN} \
-	       -v ${HRMDOCK_DIR}:/hrmdock \
-    	   ${IMAGE_NAME} \
+           -v ${HRMDOCK_DIR}:/hrmdock \
+           ${IMAGE_NAME} \
                bash -c "cd /workspace \
                         && source /hrmdock/${HRMDOCK_FILE} \
                         && hrmdock_create_user ${USER} ${ID}"
 }
+
 
 hrmdock_run_container() {
     # Start and run a shell a container given as argument.
