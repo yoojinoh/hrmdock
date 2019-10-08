@@ -469,7 +469,10 @@ RUN apt-get clean
 #-------------------------------------------------------------------------------
 # RUN apt-get install ros-melodic-dartsim
 RUN apt-add-repository ppa:dartsim/ppa
-RUN apt-get install -y libdart6-dev
+RUN apt-get install -y \
+    libdart6-dev \
+    libdart6-utils-dev \
+    libdart6-utils-urdf-dev
 
 # SUBLIME
 RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - && \
