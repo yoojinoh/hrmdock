@@ -464,7 +464,17 @@ RUN mkdir /hrmdock
 ##########################################################
 RUN apt-get clean
 
+#-------------------------------------------------------------------------------
 #--------------- NEW -----------
+#-------------------------------------------------------------------------------
 # RUN apt-get install ros-melodic-dartsim
 RUN apt-add-repository ppa:dartsim/ppa
 RUN apt-get install -y libdart6-dev
+
+# SUBLIME
+RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - && \
+    echo "deb https://download.sublimetext.com/ apt/stable/" | tee /etc/apt/sources.list.d/sublime-text.list && \
+    apt-get update && \
+    apt-get install -y sublime-text
+
+RUN apt-get install htop

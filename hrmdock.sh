@@ -10,6 +10,7 @@ HRMDOCK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 # docker start -i ID_OF_YOUR_CONTAINER
 
 hrmdock_print_config() {
+    hrmdock_load_config
     echo " - bash filename is : ${HRMDOCK_FILE}"
     echo " - script directory is in : ${HRMDOCK_DIR}"
     echo " - image name is : ${IMAGE_NAME}"
@@ -101,8 +102,8 @@ hrmdock_run_new_container() {
         OPTS="--rm"
     fi
     if $WITH_GRAPHICS ; then 
-        OPTS+="--runtime=nvidia \
-              -v /tmp/.X11-unix:/tmp/.X11-unix"
+        OPTS+=" --runtime=nvidia \
+                -v /tmp/.X11-unix:/tmp/.X11-unix"
     fi
     echo ${OPTS}
     docker run -it \
@@ -125,8 +126,9 @@ hrmdock_run_container() {
     CONTAINTER_ID=$1
     echo "Starting container ${CONTAINTER_ID}"
     docker start ${CONTAINTER_ID}
-    docker exec -it ${CONTAINTER_ID} bash -c "cd /workspace \
-                                              && su $(whoami)"
+    docker exec -it ${CONTAINTER_ID} \
+        bash -c "cd /workspace \
+                 && su $(whoami)"
 }
 
 hrmdock_run_latest_container() {
