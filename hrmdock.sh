@@ -100,22 +100,25 @@ hrmdock_run_new_container() {
     if $TEMPORARY_CONTAINER ; then
         OPTS="--rm"
     fi
+    if $WITH_GRAPHICS ; then 
+        OPTS+=" --runtime=nvidia \
+                -v /tmp/.X11-unix:/tmp/.X11-unix"
+    fi
     echo ${OPTS}
     docker run -it \
            ${OPTS} \
-           --runtime=nvidia \
            -e DISPLAY \
-           -v /tmp/.X11-unix:/tmp/.X11-unix \
            -v $(pwd):/workspace \
            -v ${HOME}/.ssh:/ssh \
            -p ${PORT_TENSORBOARD}:${PORT_TENSORBOARD} \
            -p ${PORT_MAIN}:${PORT_MAIN} \
-	       -v ${HRMDOCK_DIR}:/hrmdock \
-    	   ${IMAGE_NAME} \
+           -v ${HRMDOCK_DIR}:/hrmdock \
+           ${IMAGE_NAME} \
                bash -c "cd /workspace \
                         && source /hrmdock/${HRMDOCK_FILE} \
                         && hrmdock_create_user ${USER} ${ID}"
 }
+
 
 hrmdock_run_container() {
     # Start and run a shell a container given as argument.
