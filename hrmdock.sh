@@ -101,7 +101,7 @@ hrmdock_run_new_container() {
     if $TEMPORARY_CONTAINER ; then
         OPTS="--rm"
     fi
-    if $WITH_GRAPHICS ; then 
+    if $FORWARD_GRAPHICS ; then 
         OPTS+=" --runtime=nvidia \
                 -v /tmp/.X11-unix:/tmp/.X11-unix"
     fi
