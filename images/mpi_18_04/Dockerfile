@@ -467,12 +467,9 @@ RUN apt-get clean
 #-------------------------------------------------------------------------------
 #--------------- NEW -----------
 #-------------------------------------------------------------------------------
-# RUN apt-get install ros-melodic-dartsim
-RUN apt-add-repository ppa:dartsim/ppa
-RUN apt-get install -y \
-    libdart6-dev \
-    libdart6-utils-dev \
-    libdart6-utils-urdf-dev
+
+# HTOP
+RUN apt-get install htop
 
 # SUBLIME
 RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - && \
@@ -480,4 +477,12 @@ RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key
     apt-get update && \
     apt-get install -y sublime-text
 
-RUN apt-get install htop
+# DART
+RUN apt-add-repository ppa:dartsim/ppa
+RUN apt-get install -y \
+    libdart6-dev \
+    libdart6-utils-dev \
+    libdart6-utils-urdf-dev
+
+# OMPL
+RUN apt-get install -y libompl-dev
