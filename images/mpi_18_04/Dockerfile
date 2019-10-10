@@ -486,3 +486,16 @@ RUN apt-get install -y \
 
 # OMPL
 RUN apt-get install -y libompl-dev
+
+# FFT
+# RUN apt-get install libfftw3-dev
+
+# EINSPLINE 
+RUN apt-get install gcc-5 g++-5 && \
+    git clone https://github.com/jmainpri/einspline.git /tmp/einspline && \
+    cd /tmp/einspline && \
+    autoreconf -i && \
+    mkdir build && cd build && \
+    ../configure --prefix=/usr/local CXX=g++-5 CC=gcc-5 && \
+    make && make install && \
+    rm -rf /tmp/einspline
