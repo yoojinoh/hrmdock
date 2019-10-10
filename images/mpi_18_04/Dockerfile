@@ -465,7 +465,7 @@ RUN mkdir /hrmdock
 RUN apt-get clean
 
 #-------------------------------------------------------------------------------
-#--------------- NEW -----------
+#--------------- NEW (Jim) -----------------------------------------------------
 #-------------------------------------------------------------------------------
 
 # HTOP
@@ -479,6 +479,7 @@ RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key
 
 #-------------------------------------------------------------------------------
 # DART
+# - required by LULA
 # The version from ROS seems to have been removed in melodic
 RUN apt-add-repository ppa:dartsim/ppa
 RUN apt-get install -y \
@@ -488,7 +489,7 @@ RUN apt-get install -y \
 
 #-------------------------------------------------------------------------------
 # OMPL
-# This version is required by RIEEF
+# - required by RIEEF
 # the other version are not caught by the cmake find script
 # there seems to be at least 3 versions available for install
 # ROBOTPKG, ROS and this one.
@@ -497,8 +498,10 @@ RUN apt-get install -y libompl-dev
 
 #-------------------------------------------------------------------------------
 # EINSPLINE
-# this library requires GCC-5 to compile
-# it breaks with gcc-7, which is default on Ubuntu 18-04
+# - required by RIEEF
+# was removed from official repositories
+# requires gcc-5 to compile, which was default on 14.04
+# it breaks with gcc-7, which is default on Ubuntu 18.04
 # May require FFT
 # RUN apt-get install libfftw3-dev
 RUN apt-get install -y gcc-5 g++-5 && \
