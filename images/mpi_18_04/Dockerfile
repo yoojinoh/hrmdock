@@ -501,7 +501,7 @@ RUN apt-get install -y libompl-dev
 # it breaks with gcc-7, which is default on Ubuntu 18-04
 # May require FFT
 # RUN apt-get install libfftw3-dev
-RUN apt-get install gcc-5 g++-5 && \
+RUN apt-get install -y gcc-5 g++-5 && \
     git clone https://github.com/jmainpri/einspline.git /tmp/einspline && \
     cd /tmp/einspline && \
     autoreconf -i && \
