@@ -467,12 +467,9 @@ RUN apt-get clean
 #-------------------------------------------------------------------------------
 #--------------- NEW -----------
 #-------------------------------------------------------------------------------
-# RUN apt-get install ros-melodic-dartsim
-RUN apt-add-repository ppa:dartsim/ppa
-RUN apt-get install -y \
-    libdart6-dev \
-    libdart6-utils-dev \
-    libdart6-utils-urdf-dev
+
+# HTOP
+RUN apt-get install htop
 
 # SUBLIME
 RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - && \
@@ -480,4 +477,35 @@ RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key
     apt-get update && \
     apt-get install -y sublime-text
 
-RUN apt-get install htop
+#-------------------------------------------------------------------------------
+# DART
+# The version from ROS seems to have been removed in melodic
+RUN apt-add-repository ppa:dartsim/ppa
+RUN apt-get install -y \
+    libdart6-dev \
+    libdart6-utils-dev \
+    libdart6-utils-urdf-dev
+
+#-------------------------------------------------------------------------------
+# OMPL
+# This version is required by RIEEF
+# the other version are not caught by the cmake find script
+# there seems to be at least 3 versions available for install
+# ROBOTPKG, ROS and this one.
+RUN apt-get install -y libompl-dev
+
+
+#-------------------------------------------------------------------------------
+# EINSPLINE
+# this library requires GCC-5 to compile
+# it breaks with gcc-7, which is default on Ubuntu 18-04
+# May require FFT
+# RUN apt-get install libfftw3-dev
+RUN apt-get install gcc-5 g++-5 && \
+    git clone https://github.com/jmainpri/einspline.git /tmp/einspline && \
+    cd /tmp/einspline && \
+    autoreconf -i && \
+    mkdir build && cd build && \
+    ../configure --prefix=/usr/local CXX=g++-5 CC=gcc-5 && \
+    make && make install && \
+    rm -rf /tmp/einspline
