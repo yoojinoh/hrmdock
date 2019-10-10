@@ -492,9 +492,11 @@ RUN apt-get install -y \
 # - required by RIEEF
 # the other version are not caught by the cmake find script
 # there seems to be at least 3 versions available for install
-# ROBOTPKG, ROS and this one.
-RUN apt-get install -y libompl-dev
-
+# ROBOTPKG, ROS and this one. Rieef has to link with the same
+# version as moveit since we have to link with moveit too.
+# so we remove this version (also it seems very difficult to have catkin
+# find this version when the one from ROS is installed)
+# RUN apt-get install -y libompl-dev
 
 #-------------------------------------------------------------------------------
 # EINSPLINE
