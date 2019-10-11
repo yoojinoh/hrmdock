@@ -1,4 +1,4 @@
-# [BASH IGNORE]
+# [SSH IGNORE]
 
 FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu18.04
 MAINTAINER Vincent Berenz <vincentberenz@tuebingen.mpg.de>
@@ -10,7 +10,7 @@ MAINTAINER Vincent Berenz <vincentberenz@tuebingen.mpg.de>
 # what will go in the official ssh install script and what will not
 ###################################################################################
 
-# [/BASH IGNORE]
+# [/SSH IGNORE]
 
 ##########################################################
 # Clean the apt cache to always have up to date packages #
@@ -451,19 +451,6 @@ RUN eval `ssh-agent -s`
 #RUN apt-get install -y robotpkg-gepetto-viewer        # LAAS 3D robot viewer
 #RUN apt-get install -y robotpkg-py27-sot-torque-control # Python bindings
 
-#[SSH IGNORE]
-#########################################
-# for convenience, to map workspace in it
-#########################################
-# RUN mkdir /workspace    # already there
-# RUN mkdir /ssh          # already there
-RUN mkdir /hrmdock
-
-##########################################################
-# Clean the apt cache to always have up to date packages #
-##########################################################
-RUN apt-get clean
-
 #-------------------------------------------------------------------------------
 #--------------- NEW (Jim) -----------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -514,3 +501,16 @@ RUN apt-get install -y gcc-5 g++-5 && \
     ../configure --prefix=/usr/local CXX=g++-5 CC=gcc-5 && \
     make && make install && \
     rm -rf /tmp/einspline
+
+#[SSH IGNORE]
+#########################################
+# for convenience, to map workspace in it
+#########################################
+# RUN mkdir /workspace    # already there
+# RUN mkdir /ssh          # already there
+RUN mkdir /hrmdock
+
+##########################################################
+# Clean the apt cache to always have up to date packages #
+##########################################################
+RUN apt-get clean
