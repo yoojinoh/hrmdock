@@ -460,7 +460,7 @@ RUN apt-get install -y gcc-5 g++-5 && \
 # EIGEN for DBOT
 RUN cd /tmp && \
     wget http://bitbucket.org/eigen/eigen/get/3.2.10.tar.bz2 && \
-    tar -xf 3.2.10.tar.bz && \
+    tar -xf 3.2.10.tar.bz2 && \
     cd eigen-eigen-b9cd8366d4e8 && \
     mkdir build && cd build && cmake .. && \
     make install

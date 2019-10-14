@@ -151,6 +151,10 @@ hrmdock_stop_default_container() {
     docker stop $DEFAULT_CONTAINER_ID
 }
 
+hrmdock_stop_all_containes() {
+    docker stop $(docker ps -a -q)
+}
+
 hrmdock_import_ssh_keys() {
     # Usefull to import ssh keys in the container.
     # This will be temporarily mounted to the container and copied to
