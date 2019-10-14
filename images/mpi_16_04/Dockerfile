@@ -1,4 +1,4 @@
-# [BASH IGNORE]
+# [SSH IGNORE]
 
 FROM ubuntu:16.04
 MAINTAINER Vincent Berenz <vincentberenz@tuebingen.mpg.de>
@@ -6,11 +6,11 @@ MAINTAINER Vincent Berenz <vincentberenz@tuebingen.mpg.de>
 ###################################################################################
 # This Dockerfile is also used to generate the official image install ssh 
 # script. (see desktop_update folder in amd-clmc/official_images)
-# The [BASH IGNORE*]  [/BASH IGNORE*] ; [SSH ONLY*] [/SSH ONLY*] tags are here to indicate
+# The [SSH IGNORE*]  [/SSH IGNORE*] ; [SSH ONLY*] [/SSH ONLY*] tags are here to indicate
 # what will go in the official ssh install script and what will not
 ###################################################################################
 
-# [/BASH IGNORE]
+# [/SSH IGNORE]
 
 ##########################################################
 # Clean the apt cache to always have up to date packages #
@@ -412,21 +412,21 @@ RUN wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz -P /tmp/ && \
     make install -C /tmp/autoconf-2.69
 #[/BASH UPDATE]
 
-#[BASH IGNORE]
+#[SSH IGNORE]
 #########################################
 # for convenience, to map workspace in it
 #########################################
 RUN mkdir /workspace
 RUN mkdir /ssh
-#[/BASH IGNORE]
+#[/SSH IGNORE]
 
-#[BASH IGNORE]
+#[SSH IGNORE]
 ############################################
 # creating a user for continuous integration
 ############################################
 RUN useradd -p $(openssl passwd -1 bamboo) bamboo
 RUN usermod -aG sudo bamboo
-#[/BASH IGNORE]
+#[/SSH IGNORE]
 
 ############################
 # remove unrequired packages

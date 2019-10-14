@@ -6,7 +6,7 @@ MAINTAINER Vincent Berenz <vincentberenz@tuebingen.mpg.de>
 ###################################################################################
 # This Dockerfile is also used to generate the official image install ssh 
 # script. (see desktop_update folder in amd-clmc/official_images)
-# The [BASH IGNORE*]  [/BASH IGNORE*] ; [SSH ONLY*] [/SSH ONLY*] tags are here to indicate
+# The [SSH IGNORE*]  [/SSH IGNORE*] ; [SSH ONLY*] [/SSH ONLY*] tags are here to indicate
 # what will go in the official ssh install script and what will not
 ###################################################################################
 
@@ -120,7 +120,7 @@ RUN rosdep init
 # Install robotpkg dependencies and other dependencies for dynamic graph
 ###################################################################################################
 
-#[BASH UPDATE]
+#[SSH UPDATE]
 # Add the robotpkg ppa. This contains the LAAS laboratory code base.
 # Typically: pinocchio, dynamic-graph, gepetto-viewer, sot-core, ...
 RUN echo "deb [arch=amd64] http://robotpkg.openrobots.org/wip/packages/debian/pub $(lsb_release -sc) robotpkg" > /etc/apt/sources.list.d/ros-latest.list
@@ -320,7 +320,7 @@ RUN apt-get install -y autoconf               `# Used to build SNOPT from source
             python-qt4             `# python stuff `\
             python-empy            `# python stuff `\
             python-opencv
-#[/BASH UPDATE]
+#[/SSH UPDATE]
 
 ###############################################################################
 # PYTHON MODULES
@@ -329,7 +329,7 @@ RUN apt-get install -y autoconf               `# Used to build SNOPT from source
 ###############################################################################
 
 
-#[BASH UPDATE]
+#[SSH UPDATE]
 RUN apt-get install -y python-pip
 RUN sudo -H pip2 install --no-cache-dir --upgrade pip
 RUN sudo -H pip2 install --no-cache-dir  pyopenssl
@@ -372,7 +372,7 @@ RUN sudo -H pip3 install --no-cache-dir --upgrade sphinx
 # Auto complete treep
 RUN sudo activate-global-python-argcomplete
 
-#[/BASH UPDATE]
+#[/SSH UPDATE]
 
 #############################################################################
 # Software Workshop RAI
@@ -381,18 +381,18 @@ RUN sudo activate-global-python-argcomplete
 # readme.txt for docker clues (works on 14.04, need update for 16.04)
 # note : the commands below requires access to DNS, for docker configuration
 #        check the readme.txt file in the same folder as this Dockerfile
-#[BASH UPDATE]
+#[SSH UPDATE]
 #RUN cd /tmp && \
 #    wget --no-check-certificate https://code.is.localnet/media/artifacts/AMD%20plotting%20library/89163d92f9ee40a10dc76762946babc4/RAI-0.3.tar.gz && \
 #    tar -xzf ./RAI-0.3.tar.gz && \
 #    cd RAI-0.3 && \
 #    sudo -H pip install .
-#[/BASH UPDATE]
+#[/SSH UPDATE]
 
 ###############################################################################
 # required for the use of snopt 
 ###############################################################################
-#[BASH UPDATE]
+#[SSH UPDATE]
 RUN wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz -P /tmp/ && \
     tar -xf /tmp/autoconf-2.69.tar.gz -C /tmp/ && \
     rm /tmp/autoconf-2.69.tar.gz && \
@@ -400,56 +400,8 @@ RUN wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz -P /tmp/ && \
     ./configure && \
     make -C /tmp/autoconf-2.69 && \
     make install -C /tmp/autoconf-2.69
-#[/BASH UPDATE]
+#[/SSH UPDATE]
 
-#[BASH IGNORE]
-#########################################
-# for convenience, to map workspace in it
-#########################################
-RUN mkdir /workspace
-RUN mkdir /ssh
-#[/BASH IGNORE]
-
-#[BASH IGNORE]
-############################################
-# creating a user for continuous integration
-############################################
-RUN useradd -p $(openssl passwd -1 bamboo) bamboo
-RUN usermod -aG sudo bamboo
-RUN usermod -u 111 bamboo
-#[/BASH IGNORE]
-
-############################
-# remove unrequired packages
-############################
-RUN apt-get -y update && apt-get -y upgrade 
-RUN apt-get -y autoremove
-#[BASH UPDATE]
-RUN apt-get -y update && apt-get -y upgrade  
-#[/BASH UPDATE]
-
-########################
-# start ssh agent
-########################
-RUN eval `ssh-agent -s`
-
-
-##############################
-# on 16.04 but issues on 18.04
-##############################
-
-# libslicot-dbg
-# libeinspline
-# ros-melodic-ecto
-# ros-melodic-qt-build # note: qt-gui-cpp seems to work as replacement. More info http://wiki.ros.org/qt_create/Tutorials/Qt%20App%20Templates
-
-#The following packages have unmet dependencies:
-# robotpkg-gepetto-viewer : Depends: robotpkg-urdfdom-headers (= 0.3.0) but 1.0.4 is to be installed
-#                            Depends: robotpkg-urdfdom (= 0.3.0r2) but 1.0.3 is to be installed
-#               E: Unable to correct problems, you have held broken packages.
-                
-#RUN apt-get install -y robotpkg-gepetto-viewer        # LAAS 3D robot viewer
-#RUN apt-get install -y robotpkg-py27-sot-torque-control # Python bindings
 
 #-------------------------------------------------------------------------------
 #--------------- NEW (Jim) -----------------------------------------------------
@@ -501,6 +453,54 @@ RUN apt-get install -y gcc-5 g++-5 && \
     ../configure --prefix=/usr/local CXX=g++-5 CC=gcc-5 && \
     make && make install && \
     rm -rf /tmp/einspline
+
+#[SSH IGNORE]
+#########################################
+# for convenience, to map workspace in it
+#########################################
+RUN mkdir /workspace
+RUN mkdir /ssh
+#[/SSH IGNORE]
+
+#[SSH IGNORE]
+############################################
+# creating a user for continuous integration
+############################################
+RUN useradd -p $(openssl passwd -1 bamboo) bamboo
+RUN usermod -aG sudo bamboo
+RUN usermod -u 111 bamboo
+#[/SSH IGNORE]
+
+############################
+# remove unrequired packages
+############################
+RUN apt-get -y update && apt-get -y upgrade 
+RUN apt-get -y autoremove
+#[SSH UPDATE]
+RUN apt-get -y update && apt-get -y upgrade  
+#[/SSH UPDATE]
+
+########################
+# start ssh agent
+########################
+RUN eval `ssh-agent -s`
+
+##############################
+# on 16.04 but issues on 18.04
+##############################
+
+# libslicot-dbg
+# libeinspline
+# ros-melodic-ecto
+# ros-melodic-qt-build # note: qt-gui-cpp seems to work as replacement. More info http://wiki.ros.org/qt_create/Tutorials/Qt%20App%20Templates
+
+#The following packages have unmet dependencies:
+# robotpkg-gepetto-viewer : Depends: robotpkg-urdfdom-headers (= 0.3.0) but 1.0.4 is to be installed
+#                            Depends: robotpkg-urdfdom (= 0.3.0r2) but 1.0.3 is to be installed
+#               E: Unable to correct problems, you have held broken packages.
+                
+#RUN apt-get install -y robotpkg-gepetto-viewer        # LAAS 3D robot viewer
+#RUN apt-get install -y robotpkg-py27-sot-torque-control # Python bindings
 
 #[SSH IGNORE]
 #########################################
