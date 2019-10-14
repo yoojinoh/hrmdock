@@ -408,7 +408,9 @@ RUN wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz -P /tmp/ && \
 #-------------------------------------------------------------------------------
 
 # HTOP
-RUN apt-get install htop
+RUN apt-get install -y \
+   htop \
+   psmisc
 
 # SUBLIME
 RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - && \
@@ -453,6 +455,15 @@ RUN apt-get install -y gcc-5 g++-5 && \
     ../configure --prefix=/usr/local CXX=g++-5 CC=gcc-5 && \
     make && make install && \
     rm -rf /tmp/einspline
+
+#-------------------------------------------------------------------------------
+# EIGEN for DBOT
+RUN cd /tmp && \
+    wget http://bitbucket.org/eigen/eigen/get/3.2.10.tar.bz2 && \
+    tar -xf 3.2.10.tar.bz && \
+    cd eigen-eigen-b9cd8366d4e8 && \
+    mkdir build && cd build && cmake .. && \
+    make install
 
 #[SSH IGNORE]
 #########################################
