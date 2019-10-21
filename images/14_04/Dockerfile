@@ -88,8 +88,7 @@ RUN apt-get update && \
     ros-indigo-ros-control \
     ros-indigo-ros-controllers \
     ros-indigo-tf-conversions \
-    ros-indigo-tf-conversions \
-    ros-indigo-turtlebot-* \
+    # ros-indigo-turtlebot-* \ # problems with kernel
     ros-indigo-robot-self-filter \
     ros-indigo-xacro 
 
@@ -106,9 +105,7 @@ RUN apt-get install -y \
     bc \
     binutils \
     build-essential \
-    build-essential \
     ccache \
-    cmake \
     cmake \
     cmake-curses-gui \
     curl \
@@ -133,9 +130,7 @@ RUN apt-get install -y \
     libdart5-dev \
     libdbus-1-dev \
     libedit-dev \
-    libedit-dev \
     libeigen3-dev \
-    libeinspline-dev \
     libeinspline-dev \
     libevent-dev \
     libf2c2-dev \
