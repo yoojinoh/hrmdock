@@ -237,6 +237,7 @@ RUN apt-get install -y less                `# Similar to "more", installed by de
                        ssh                 `# ssh client+server`\
                        openssh-server      `# ssh server`\
                        sshpass             `# Non-interactive ssh password authentication`\
+		       ssh-askpass-gnome   `# Add this to log sshagent at start`\
                        emacs               `# Basic text editor`
 
 # Code dependencies ?
@@ -410,7 +411,8 @@ RUN wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz -P /tmp/ && \
 # HTOP
 RUN apt-get install -y \
    htop \
-   psmisc
+   psmisc \
+   clang-format-7
 
 # SUBLIME
 RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - && \
@@ -418,15 +420,51 @@ RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key
     apt-get update && \
     apt-get install -y sublime-text
 
+# Acroread
+# RUN apt install -y \
+#     gdebi-core \
+#     libxml2:i386 \
+#     libcanberra-gtk-module:i386 \
+#     gtk2-engines-murrine:i386 \
+#     libatk-adaptor:i386
+
 #-------------------------------------------------------------------------------
 # DART
 # - required by LULA
-# The version from ROS seems to have been removed in melodic
+# Version from ROS seems to have been removed in melodic
+# This version is compiled against a different version of
+# octomap than the one in melodic which makes it impossible
+# to use octomap with dart in c++ dev code, hence we 
+# compile it from source
+
 RUN apt-add-repository -y ppa:dartsim/ppa
 RUN apt-get install -y \
     libdart6-dev \
     libdart6-utils-dev \
     libdart6-utils-urdf-dev
+
+# Should already be there
+# RUN apt-get install -y \
+#     build-essential \
+#     cmake \
+#     pkg-config \
+#     git \
+#     libeigen3-dev \
+#     libassimp-dev \
+#     libccd-dev \
+#     libfcl-dev \
+#     libboost-regex-dev \
+#     libboost-system-dev \
+#     libopenscenegraph-dev
+
+# You can uninstall with make uninstall
+# RUN cd tmp \
+#     git clone git://github.com/dartsim/dart.git \
+#     cd dart \
+#     git checkout tags/v6.8.2 \
+#     mkdir build && cd build \
+#     cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo && make -j \
+#     make install
 
 #-------------------------------------------------------------------------------
 # OMPL
