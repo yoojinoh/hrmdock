@@ -465,6 +465,13 @@ RUN cd /tmp && \
     mkdir build && cd build && cmake .. && \
     make install
 
+#-------------------------------------------------------------------------------
+# MISC
+RUN apt install \
+    qgit \
+    rename \
+    python-tkinter
+
 #[SSH IGNORE]
 #########################################
 # for convenience, to map workspace in it
