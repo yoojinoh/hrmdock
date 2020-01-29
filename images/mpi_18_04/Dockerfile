@@ -502,6 +502,10 @@ RUN cd /tmp && \
     cd eigen-eigen-b9cd8366d4e8 && \
     mkdir build && cd build && cmake .. && \
     make install
+    
+#-------------------------------------------------------------------------------
+# IPOPT   
+RUN apt-get install -y coinor-libipopt-dev
 
 #[SSH IGNORE]
 #########################################
