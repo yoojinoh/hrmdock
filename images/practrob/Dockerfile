@@ -17,6 +17,14 @@ RUN apt-get --yes install \
      autoconf \
      libfcl-dev
 
+##########################################################
+RUN apt-get install -y python3-pip
+RUN sudo -H pip3 install --no-cache-dir --upgrade \
+    numpy  \
+    jupyter  \
+    matplotlib  \
+    opencv-python
+
 RUN mkdir -p /workspace/git
 
 ##########################################################
