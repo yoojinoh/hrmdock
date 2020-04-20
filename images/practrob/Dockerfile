@@ -1,12 +1,17 @@
 # [SSH IGNORE]
 FROM ubuntu:18.04
 MAINTAINER Jim Mainprice <mainprice@gmail.com>
+
+########################################################
+# Favoring non interactive installation
+########################################################
+ENV DEBIAN_FRONTEND=noninteractive
+
 # [/SSH IGNORE]
 
 # this is only to speed up
 # the make installUbuntuAll would do the same in the test shell...
 
-ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get --yes update
 RUN apt-get --yes install \
     apt-utils git sudo g++ make gnupg gdb cmake \
@@ -38,8 +43,7 @@ RUN sudo -H pip3 install --no-cache-dir --upgrade \
 
 ##########################################################
 # Install Physx 3.4 (literally from https://github.com/MarcToussaint/rai-maintenance/blob/master/help/localSourceInstalls.md#physx)
-RUN \
-    mkdir -p $HOME/git && \
+RUN mkdir -p $HOME/git && \
     cd $HOME/git && \
     git clone https://github.com/NVIDIAGameWorks/PhysX.git && \
     cd PhysX && \
@@ -55,10 +59,11 @@ RUN \
     cp -R PhysX_3.4/Include/* $HOME/opt/physx3.4/include/physx && \
     cp -R PxShared/include/* $HOME/opt/physx3.4/include/physx && \
     rm -Rf $HOME/git/PhysX
-    ENV LD_LIBRARY_PATH = "${LD_LIBRARY_PATH}:$HOME/opt/physx3.4/lib"
-
 
 # [SSH IGNORE]
+
+ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:$HOME/opt/physx3.4/lib"
+
 ##########################################################
 # This is then mounted by the user to a shared folder
 
