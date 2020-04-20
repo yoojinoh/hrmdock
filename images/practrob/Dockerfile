@@ -15,7 +15,7 @@ RUN apt-get --yes install \
      libjsoncpp-dev libassimp-dev libqhull-dev libann-dev \
      cmake \
      autoconf \
-     libfcl-0.5-dev
+     libfcl-dev
 
 RUN mkdir -p /workspace/git
 
