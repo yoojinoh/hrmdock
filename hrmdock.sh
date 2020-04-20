@@ -103,8 +103,8 @@ hrmdock_run_new_container() {
     fi
     if $FORWARD_GRAPHICS ; then
         xhost local:root
-        OPTS+=" --runtime=nvidia \
-                -v /tmp/.X11-unix:/tmp/.X11-unix"
+        NVIDIA="--gpus all"  # OLD : (--runtime=nvidia)
+        OPTS+="${NVIDIA} -v /tmp/.X11-unix:/tmp/.X11-unix"
     fi
     echo ${OPTS}
     docker run -it \
