@@ -41,6 +41,7 @@ RUN cd /workspace/git  && \
 ENV LD_LIBRARY_PATH = "${LD_LIBRARY_PATH}:/opt/physx3.4/lib"
 ##########################################################
 # setup repo
+# make -j1 installUbuntuAll  && \
 
 RUN cd /workspace/git  && \
 	git clone https://github.com/MarcToussaint/robotics-course.git  && \
@@ -52,13 +53,5 @@ RUN cd /workspace/git  && \
 	cd build  && \
 	cmake ..  && \
 	make -j $(command nproc)
-
-##########################################################
-RUN apt-get install -y python3-pip
-RUN sudo -H pip3 install --no-cache-dir --upgrade \
-	numpy  \
-	jupyter  \
-	matplotlib  \
-	opencv-python
 
 WORKDIR /root
