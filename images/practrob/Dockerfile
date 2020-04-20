@@ -58,12 +58,12 @@ RUN \
     ENV LD_LIBRARY_PATH = "${LD_LIBRARY_PATH}:$HOME/opt/physx3.4/lib"
 
 
+# [SSH IGNORE]
 ##########################################################
 # This is then mounted by the user to a shared folder
 
 RUN mkdir -p /workspace
 
-#[SSH IGNORE]
 ##########################################################
 # setup repo
 # make -j1 installUbuntuAll  && \
@@ -78,4 +78,4 @@ RUN cd /workspace  && \
 	make -j $(command nproc)
 
 WORKDIR /workspace
-#[/SSH IGNORE]
+# [/SSH IGNORE]
