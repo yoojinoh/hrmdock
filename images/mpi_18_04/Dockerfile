@@ -1,6 +1,7 @@
 # [SSH IGNORE]
 
-FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu18.04
+# FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu18.04
+FROM ubuntu:18.04
 MAINTAINER Vincent Berenz <vincentberenz@tuebingen.mpg.de>
 
 ###################################################################################
@@ -512,7 +513,8 @@ RUN apt-get install -y coinor-libipopt-dev
 RUN apt install \
     qgit \
     rename \
-    python-tkinter
+    coinor-libipopt-dev
+    # python-tkinter
 
 #[SSH IGNORE]
 #########################################

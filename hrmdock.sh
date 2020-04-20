@@ -109,7 +109,7 @@ hrmdock_run_new_container() {
     echo ${OPTS}
     docker run -it \
            ${OPTS} \
-           -e DISPLAY \
+           -e DISPLAY=129.69.216.147:0 \
            -v $(pwd):/workspace \
            -v ${HOME}/.ssh:/ssh \
            -p ${PORT_TENSORBOARD}:${PORT_TENSORBOARD} \
