@@ -17,6 +17,8 @@ RUN apt-get --yes install \
      autoconf \
      libfcl-dev 
 
+ENV TZ=Europe/Minsk
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get --yes install \
   gdal-data i965-va-driver \
   ibverbs-providers javascript-common libaacs0 \
@@ -68,6 +70,8 @@ RUN sudo -H pip3 install --no-cache-dir --upgrade \
     jupyter  \
     matplotlib  \
     opencv-python
+
+##########################################################
 
 RUN mkdir -p /root/workspace
 
