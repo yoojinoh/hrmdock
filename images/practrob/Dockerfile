@@ -86,13 +86,13 @@ RUN cd /root/workspace  && \
 	make release  && \
 	mkdir -p /opt/physx3.4/lib  && \
 	mkdir -p /opt/physx3.4/include/physx  && \
-	cd /workspace/git/PhysX  && \
+	cd /root/workspace/PhysX  && \
 	cp PhysX_3.4/Bin/linux64/* /opt/physx3.4/lib  && \
 	cp PhysX_3.4/Lib/linux64/* /opt/physx3.4/lib  && \
 	cp PxShared/bin/linux64/* /opt/physx3.4/lib  && \
 	cp -R PhysX_3.4/Include/* /opt/physx3.4/include/physx  && \
 	cp -R PxShared/include/* /opt/physx3.4/include/physx  && \
-	rm -rf /workspace/git/PhysX
+	rm -rf /root/workspace/PhysX
 
 ENV LD_LIBRARY_PATH = "${LD_LIBRARY_PATH}:/opt/physx3.4/lib"
 ##########################################################
