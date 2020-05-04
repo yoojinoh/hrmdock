@@ -73,14 +73,14 @@ RUN mkdir -p /workspace
 # setup repo
 # make -j1 installUbuntuAll  && \
 RUN cd /workspace  && \
-	git clone https://github.com/MarcToussaint/robotics-course.git  && \
-	cd robotics-course  && \
-	git submodule init  && \
-	git submodule update  && \
-	mkdir build  && \
-	cd build  && \
-	cmake ..  && \
-	make -j $(command nproc)
+    git clone https://github.com/MarcToussaint/robotics-course.git  && \
+    cd robotics-course  && \
+    git submodule init  && \
+    git submodule update  && \
+    mkdir build  && \
+    cd build  && \
+    cmake ..  && \
+    make -j $(command nproc)
 
 WORKDIR /workspace
 # [/SSH IGNORE]

@@ -16,6 +16,15 @@ hrmdock_print_config() {
     echo " - image name is : ${IMAGE_NAME}"
 }
 
+hrmdock_set_default_image() {
+    CONFIG_FILE=${HRMDOCK_DIR}/hrmdock.config
+    echo $CONFIG_FILE
+    sed -i '.bak' '/^IMAGE_NAME/d' ${CONFIG_FILE}
+    sed -i '.bak' '/^IMAGE_DIRECTORY/d' ${CONFIG_FILE}
+    echo  -e "IMAGE_NAME=${1}:latest" >> ${CONFIG_FILE}
+    echo  -e "IMAGE_DIRECTORY=${1}" >> ${CONFIG_FILE}
+}
+
 hrmdock_cd() {
     cd ${HRMDOCK_DIR}
 }
