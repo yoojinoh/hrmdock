@@ -4,6 +4,7 @@
 # in this script.
 HRMDOCK_FILE=$(basename $BASH_SOURCE)
 HRMDOCK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+OS="$(uname)"
 
 # To run the last container
 # docker ps -a --latest
@@ -18,9 +19,11 @@ hrmdock_print_config() {
 
 hrmdock_set_default_image() {
     CONFIG_FILE=${HRMDOCK_DIR}/hrmdock.config
-    echo $CONFIG_FILE
-    sed -i '.bak' '/^IMAGE_NAME/d' ${CONFIG_FILE}
-    sed -i '.bak' '/^IMAGE_DIRECTORY/d' ${CONFIG_FILE}
+    if [[ ${OS} == "Darwin" ]] ; then
+	EXT='.bak'
+    fi
+    sed -i ${EXT} '/^IMAGE_NAME/d' ${CONFIG_FILE}
+    sed -i ${EXT} '/^IMAGE_DIRECTORY/d' ${CONFIG_FILE}
     echo  -e "IMAGE_NAME=${1}:latest" >> ${CONFIG_FILE}
     echo  -e "IMAGE_DIRECTORY=${1}" >> ${CONFIG_FILE}
 }
