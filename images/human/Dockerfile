@@ -1,8 +1,10 @@
-# [SSH IGNORE]
+#[SSH IGNORE]
 
 # FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu18.04
 FROM ubuntu:18.04
 MAINTAINER Jim Mainprice <jim.mainprice@gmail.com>
+
+#[/SSH IGNORE]
 
 ###################################################################################
 # This Dockerfile is also used to generate the official image install ssh 

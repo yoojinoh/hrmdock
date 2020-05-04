@@ -78,8 +78,10 @@ hrmdock_update_this_machine() {
     # Dockerfile and update this machine. It supposes that the machine's 
     # version of the operating system agrees with the Dockerfile
     hrmdock_load_config
+    echo "Update machine acording to ${IMAGE_DIRECTORY}"
     cd ${HRMDOCK_DIR}
     UPDATE_SCRIPT=scripts/autogenerate_update_script.sh
+    rm ${UPDATE_SCRIPT}
     python scripts/generate_update_script.py \
         ${HRMDOCK_DIR}/images/${IMAGE_DIRECTORY}/Dockerfile ${UPDATE_SCRIPT}
     sudo bash ${UPDATE_SCRIPT}
