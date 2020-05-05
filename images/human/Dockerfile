@@ -79,7 +79,7 @@ RUN apt-get install -y \
     ros-melodic-octomap-rviz-plugins
 
 # Install other dependencies
-RUN apt-get install libgoogle-glog-dev
+RUN apt-get install -y libgoogle-glog-dev
 
 # Intialize rosdep
 RUN rosdep init
