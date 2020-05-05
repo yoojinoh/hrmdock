@@ -5,6 +5,7 @@
 HRMDOCK_FILE=$(basename $BASH_SOURCE)
 HRMDOCK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 OS="$(uname)"
+CACHE=""
 
 # To run the last container
 # docker ps -a --latest

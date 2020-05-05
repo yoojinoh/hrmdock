@@ -4,14 +4,14 @@
 FROM ubuntu:18.04
 MAINTAINER Jim Mainprice <jim.mainprice@gmail.com>
 
-#[/SSH IGNORE]
-
 ###################################################################################
 # This Dockerfile is also used to generate the official image install ssh 
 # script. (see desktop_update folder in amd-clmc/official_images)
 # The [SSH IGNORE*]  [/SSH IGNORE*] ; [SSH ONLY*] [/SSH ONLY*] tags are here to indicate
 # what will go in the official ssh install script and what will not
 ###################################################################################
+
+#[/SSH IGNORE]
 
 ##########################################################
 # Clean the apt cache to always have up to date packages #
@@ -76,17 +76,13 @@ RUN apt-get install -y \
     ros-melodic-moveit-core \
     ros-melodic-octomap \
     ros-melodic-octomap-msgs \
-    ros-melodic-octomap-rviz-plugins 
+    ros-melodic-octomap-rviz-plugins
 
+# Install other dependencies
+RUN apt-get install libgoogle-glog-dev
+
+# Intialize rosdep
 RUN rosdep init
-
-#[SSH IGNORE]
-#########################################
-# for convenience, to map workspace in it
-#########################################
-RUN mkdir /workspace
-RUN mkdir /ssh
-#[/SSH IGNORE]
 
 #[SSH IGNORE]
 ############################################
@@ -115,8 +111,8 @@ RUN eval `ssh-agent -s`
 #########################################
 # for convenience, to map workspace in it
 #########################################
-# RUN mkdir /workspace    # already there
-# RUN mkdir /ssh          # already there
+RUN mkdir /workspace    # already there
+RUN mkdir /ssh          # already there
 RUN mkdir /hrmdock
 
 ##########################################################
