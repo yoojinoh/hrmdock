@@ -1,13 +1,13 @@
 # [SSH IGNORE]
 
-# FROM ubuntu:14.04
-FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu14.04
+# FROM ubuntu:18.04
+FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu18.04
 MAINTAINER Jim Mainprice <mainprice@gmail.com>
 
 ################################################################################
 # This Dockerfile is also used to generate the official image install ssh 
 # script. (see desktop_update folder in amd-clmc/official_images)
-# The [SSH IGNORE*]  [/SSH IGNORE*] ;
+# The [SSH IGNORE*]  [/SSH IGNORE*] ; 
 # [SSH ONLY*] [/SSH ONLY*] tags are here to indicate
 # what will go in the official ssh install script and what will not
 ################################################################################
@@ -51,17 +51,16 @@ RUN apt-get --yes install \
     libgbm-dev \
     libgsl0-dev \
     libglpk-dev \
+    libboost-dev \
     libgts-dev \
     freeglut3 \
     freeglut3-dev \
     libeigen3-dev \
-    libboost-dev \
-    libboost-filesystem-dev \
     libboost-thread-dev
 
 # [SSH IGNORE]
 
-RUN export MOVE3D_INSTALL_DIR=/workspace/move3d_install
+RUN export MOVE3D_INSTALL_DIR=$HOME/move3d_install
 
 ##########################################################
 # This is then mounted by the user to a shared folder
@@ -71,11 +70,9 @@ RUN mkdir -p /workspace
 ##########################################################
 # INSTALL MOVE3D
 # RUN cd /workspace  && \
-#     mkdir move3d && \
-#     cd move3d && \
 #     git clone https://github.com/jmainpri/move3d-launch.git  && \
 #     cd move3d-launch && \
-#     ./install-ubuntu.sh install-ssh no_sysdep
+#     ./install-ubuntu.sh install-https
 
 # echo "HOME_MOVE3D= "$HOME_MOVE3D
 # echo "LD_LIBRARY_PATH= " $LD_LIBRARY_PATH
