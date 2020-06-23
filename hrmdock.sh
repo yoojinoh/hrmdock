@@ -114,17 +114,18 @@ hrmdock_run_new_container() {
     ID=$(id -u ${USER})
     OPTS=""
     if $TEMPORARY_CONTAINER ; then
-        OPTS="--rm"
+        OPTS="--rm "
     fi
     if $FORWARD_GRAPHICS ; then
         xhost local:root
         NVIDIA="--gpus all"  # OLD : (--runtime=nvidia)
         OPTS+="${NVIDIA} -v /tmp/.X11-unix:/tmp/.X11-unix"
+        DISPLAY_NUMBER=$(echo $DISPLAY | cut -d. -f1 | cut -d: -f2)
     fi
     echo ${OPTS}
     docker run -it \
            ${OPTS} \
-           -e DISPLAY=129.69.216.147:0 \
+           -e DISPLAY=:$DISPLAY_NUMBER \
            -v $(pwd):/workspace \
            -v ${HOME}/.ssh:/ssh \
            -p ${PORT_TENSORBOARD}:${PORT_TENSORBOARD} \

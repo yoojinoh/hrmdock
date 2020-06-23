@@ -70,17 +70,11 @@ RUN mkdir -p /workspace
 
 ##########################################################
 # INSTALL MOVE3D
-RUN cd /workspace  && \
-    mkdir move3d && \
-    cd move3d && \
+RUN mkdir -p /move3d && \
+    cd /move3d && \
     git clone https://github.com/jmainpri/move3d-launch.git  && \
     cd move3d-launch && \
     bash install-ubuntu.sh install-https no_sysdep
-
-# echo "HOME_MOVE3D= "$HOME_MOVE3D
-# echo "LD_LIBRARY_PATH= " $LD_LIBRARY_PATH
-# echo "PKG_CONFIG_PATH= " $PKG_CONFIG_PATH
-# echo "PATH= "$PATH
 
 WORKDIR /workspace
 # [/SSH IGNORE]
