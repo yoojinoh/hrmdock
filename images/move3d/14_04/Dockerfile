@@ -61,7 +61,7 @@ RUN apt-get --yes install \
 
 # [SSH IGNORE]
 
-RUN export MOVE3D_INSTALL_DIR=/workspace/move3d_install
+RUN export MOVE3D_INSTALL_DIR=/workspace/move3d/install
 
 ##########################################################
 # This is then mounted by the user to a shared folder
@@ -70,12 +70,12 @@ RUN mkdir -p /workspace
 
 ##########################################################
 # INSTALL MOVE3D
-# RUN cd /workspace  && \
-#     mkdir move3d && \
-#     cd move3d && \
-#     git clone https://github.com/jmainpri/move3d-launch.git  && \
-#     cd move3d-launch && \
-#     ./install-ubuntu.sh install-ssh no_sysdep
+RUN cd /workspace  && \
+    mkdir move3d && \
+    cd move3d && \
+    git clone https://github.com/jmainpri/move3d-launch.git  && \
+    cd move3d-launch && \
+    ./install-ubuntu.sh install-http no_sysdep
 
 # echo "HOME_MOVE3D= "$HOME_MOVE3D
 # echo "LD_LIBRARY_PATH= " $LD_LIBRARY_PATH
