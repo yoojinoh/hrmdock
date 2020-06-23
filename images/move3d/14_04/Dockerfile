@@ -75,7 +75,7 @@ RUN cd /workspace  && \
     cd move3d && \
     git clone https://github.com/jmainpri/move3d-launch.git  && \
     cd move3d-launch && \
-    ./install-ubuntu.sh install-http no_sysdep
+    bash install-ubuntu.sh install-https no_sysdep
 
 # echo "HOME_MOVE3D= "$HOME_MOVE3D
 # echo "LD_LIBRARY_PATH= " $LD_LIBRARY_PATH
