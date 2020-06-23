@@ -2,7 +2,7 @@
 
 # FROM ubuntu:14.04
 FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu14.04
-MAINTAINER Vincent Berenz <vincentberenz@tuebingen.mpg.de>
+MAINTAINER Jim Mainprice <mainprice@gmail.com>
 
 ###################################################################################
 # This Dockerfile is also used to generate the official image install ssh 
@@ -19,36 +19,12 @@ MAINTAINER Vincent Berenz <vincentberenz@tuebingen.mpg.de>
 
 RUN apt-get update && \
     apt-get -y install curl wget
-
 RUN apt-get update && apt-get install -y software-properties-common
-
-RUN apt-add-repository -y ppa:ubuntu-elisp/ppa
-RUN apt-add-repository -y ppa:libccd-debs
-RUN apt-add-repository -y ppa:fcl-debs
-RUN apt-add-repository -y ppa:dartsim
-
-
-RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list && \
-    wget http://packages.ros.org/ros.key -O - | apt-key add -
-
-RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-
-
-###################
-# required for ldap
-###### [SSH IGNORE]
-FROM ubuntu:18.04
-MAINTAINER Jim Mainprice <mainprice@gmail.com>
 
 ########################################################
 # Favoring non interactive installation
 ########################################################
 ENV DEBIAN_FRONTEND=noninteractive
-
-# [/SSH IGNORE]
-
-# this is only to speed up
-# the make installUbuntuAll would do the same in the test shell...
 
 RUN apt-get --yes update
 RUN apt-get --yes install \
