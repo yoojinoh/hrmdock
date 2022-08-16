@@ -3,12 +3,21 @@ HRMDock
 
 Bash project to manage code dependencies using Dockerfiles.
 
-Start by:
 
-    source hrmdock.sh
+## Getting started
+1. Clone repository
+```
+git clone https://github.com/yoojinoh/hrmdock.git
+```
+2. Make sure Docker is installed, or else `sudo snap install docker` Add user to docker group
+```
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo reboot
+docker run hello-world
+```
 
-It's good practice to have it your .bashrc
-
+3. Start by sourcing the bash script. It's convenient to have it in your .bashrc.
 Importing will give you access to helper function to build images, run containers or update your ubuntu machine.
 
 The workflow is as follows:
