@@ -78,7 +78,8 @@ RUN apt -y update &&  apt install -y bash-completion     `# Allow bash completio
                screen              `# terminal multiplexer with VT100/ANSI terminal emulation`\
                shellcheck          `# lint tool for shell scripts`\
                swig                `# Generate scripting interfaces to C/C++ code`\
-               xmlto               `# XML-to-any converter`
+               xmlto               `# XML-to-any converter`\
+               htop
 
 # Development tools
 RUN apt install -y less                `# Similar to "more", installed by default?`\
@@ -146,7 +147,9 @@ RUN sudo -H pip3 install --no-cache-dir  --upgrade \
     seaborn \
     Pillow \
     treep `# MPI-IS code project manager` \
-    pybind11
+    pybind11 \
+    pybullet \
+    pyquaternion
 
 RUN sudo -H pip3 install --no-cache-dir tensorflow==2.9 
 
@@ -180,7 +183,9 @@ RUN apt-get --yes install \
     graphviz \
     ros-melodic-camera-info-manager \
     ros-melodic-ros-controllers \
-    ros-melodic-gazebo-ros
+    ros-melodic-gazebo-ros \
+    ros-melodic-robot-state-publisher \
+    ros-melodic-rviz
 
 
 
